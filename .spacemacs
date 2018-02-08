@@ -24,6 +24,7 @@
   ;; https://www.emacswiki.org/emacs/FrameTitle
   "Sets buffer file name or buffer name as terminal title"
   (interactive)
+  (require 'projectile)
 
   (if buffer-file-name
     (send-string-to-terminal (concat "\033]2; " (buffer-modified-title-sign) (buffer-file-name) (current-branch-name) "\007"))
@@ -550,8 +551,7 @@ values."
    ;; `recents' `bookmarks' `projects' `agenda' `todos'."
    ;; List sizes may be nil, in which case
    ;; `spacemacs-buffer-startup-lists-length' takes effect.
-   dotspacemacs-startup-lists '((recents . 5)
-                                (projects . 7))
+   dotspacemacs-startup-lists nil
    dotspacemacs-startup-buffer-responsive t
    dotspacemacs-scratch-mode 'clojure-mode
    dotspacemacs-themes '(zenburn
