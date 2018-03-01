@@ -457,6 +457,8 @@
   (setq powerline-default-separator nil)
   (setq company-auto-complete t)
   (setq recentf-save-file (format "/tmp/recentf.%s" (emacs-pid))) ;; https://github.com/syl20bnr/spacemacs/issues/5186
+  (setq split-height-threshold nil)
+  (setq split-width-threshold 0)
 
   ;; modes
   (global-company-mode 1)
