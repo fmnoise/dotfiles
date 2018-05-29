@@ -497,11 +497,11 @@ values."
    '(
      sql
      javascript
-     python
      markdown
      clojure
      helm
      emacs-lisp
+     react
      )
    dotspacemacs-additional-packages '(company
                                       rainbow-mode
