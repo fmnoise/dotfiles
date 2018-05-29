@@ -276,10 +276,13 @@
   (global-set-key (kbd "M-?")     'helm-imenu-in-all-buffers)
   (global-set-key (kbd "M-z")     'zoom-window-no-color-change)
 
-  (global-set-key (kbd "M-+ @^")  'level-up-block)
-  (global-set-key (kbd "M-+ @>")  'sp-beginning-of-next-sexp) ;; hs-show-block
-  (global-set-key (kbd "M-+ @<")  'sp-beginning-of-previous-sexp) ;; hs-hide-block
-  (global-set-key (kbd "M-+ @v")  'sp-down-sexp) ;; 'hs-toggle-hiding
+  ;; blocks navigation
+  (global-set-key (kbd "M-+ @<")  'level-up-block)
+  (global-set-key (kbd "M-+ @v")  'sp-beginning-of-next-sexp) ;; hs-show-block
+  (global-set-key (kbd "M-+ @^")  'sp-beginning-of-previous-sexp) ;; hs-hide-block
+  (global-set-key (kbd "M-+ @>")  'sp-down-sexp) ;; 'hs-toggle-hiding
+
+  ;; hide/show
   (global-set-key (kbd "M-* +@<") 'hs-hide-block)
   (global-set-key (kbd "M-* +@>") 'hs-show-block)
   (global-set-key (kbd "M-F h")   'hs-hide-all)
@@ -291,10 +294,13 @@
   ;; (global-set-key (kbd "M-s")     'next-line)
   ;; (global-set-key (kbd "M-d")     'right-char)
 
+  ;; ??? UNUSED/RARE
   (global-set-key (kbd "M-r")     'replace-string)
   (global-set-key (kbd "M-R")     'replace-regexp)
   (global-set-key (kbd "M-l")     'linum-mode)
   (global-set-key (kbd "M-;")     'indent-guide-mode)
+  (global-set-key (kbd "C-a")     'toggle-ag-hidden-search)
+
   (global-set-key (kbd "M-`")     'keyboard-quit)
   (global-set-key (kbd "M-a")     'mc/mark-all-like-this)
   (global-set-key (kbd "M-w")     'mc/mark-next-like-this)
@@ -306,16 +312,16 @@
   (global-set-key (kbd "C-g")     'goto-line)
   (global-set-key (kbd "C-t")     'helm-themes)
 
+  ;; scrolling
   (global-set-key (kbd "<mouse-5>") 'scroll-up-line) ;; TODO off all mc / selection
   (global-set-key (kbd "<mouse-4>") 'scroll-down-line) ;; TODO off all mc / selection
   (global-set-key (kbd "M-+ *@^") 'scroll-down-line) ;; TODO off all mc / selection
   (global-set-key (kbd "M-+ *@v") 'scroll-up-line) ;; TODO off all mc / selection
 
-  (global-set-key (kbd "C-a") 'toggle-ag-hidden-search)
-
   (global-set-key (kbd "M-# @^")  'backward-paragraph)
   (global-set-key (kbd "M-# @v") 'forward-paragraph)
 
+  ;; UNUSED
   (global-set-key (kbd "M-# m")   (lambda () (interactive) (switch-to-buffer (messages-buffer))))
   (global-set-key (kbd "<f12>") 'spacemacs/find-dotfile)
   (global-set-key (kbd "<f5>") 'spacemacs/copy-file)
@@ -323,7 +329,6 @@
   (global-unset-key (kbd "<f10>"))
 
   ;; todo - setup window size manipulation: option + ctrl + arrow
-  ;; + setup magit
   ;; todo - setup bookmarks
 
   ;; todo - good hotkeys
@@ -333,7 +338,6 @@
   ;; M-k kill?
 
   ;; todo - fn+ctrl+shift+alt+arrow(Home End PgUp PgDown) for navigation
-
   ;; todo - good hotkeys caps(=alt)+shift + a z / s x / w e
 
   (with-eval-after-load "neotree"
@@ -372,13 +376,20 @@
 
   (global-set-key (kbd "M-i") 'cider-inspect-last-result)
   (global-set-key (kbd "M-d") 'cider-doc)
+
+  ;; UNUSED
   (global-set-key (kbd "M-# r") 'cider-restart)
   (global-set-key (kbd "M-# l") 'cider-jack-in)
   (global-set-key (kbd "M-# k") 'cider-quit)
+
   (global-set-key (kbd "M-# )") (lambda () (interactive) (parinfer-indent)))
   (global-set-key (kbd "M-P") (lambda () (interactive) (parinfer--switch-to-paren-mode)))
   (global-set-key (kbd "M-I") (lambda () (interactive) (parinfer--switch-to-indent-mode)))
   (global-set-key (kbd "M-# *!!") 'spacemacs/eval-current-form-sp) ;; this is about elisp
+  ;; TODO
+  ;; - er/mark-outside-pairs
+  ;; - er/expand-region
+  ;; - paredit/raise-sexp and other
 
   (setq cider-repl-display-in-current-window t)
   (setq cider-eval-result-duration 30)
@@ -400,11 +411,9 @@
   (define-key clojure-mode-map (kbd "TAB") 'self-insert-command)
   (define-key clojure-mode-map (kbd "M-# *!!") 'cider-eval-buffer)
 
-  ;;(setq clojure-indent-style :align-arguments)
-  (put-clojure-indent 'lete 1)
-  ;; (put-clojure-indent '-> 1)
-  ;; (put-clojure-indent '->> 1)
-  ;; (put-clojure-indent 'cond-> 1)
+  ;; (setq clojure-indent-style :align-arguments)
+  ;; (put-clojure-indent 'lete 1)
+  ;; TODO setup clojure indentation
   )
 
 (defun toggle-magit-status ()
@@ -447,8 +456,6 @@
 
   (add-hook 'sgml-mode-hook 'hs-minor-mode)
   )
-
-
 
 (defun fmnoise/setup ()
   ;; vars
