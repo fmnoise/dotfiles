@@ -467,12 +467,12 @@
   (setq powerline-default-separator nil)
   (setq company-auto-complete t)
   (setq recentf-save-file (format "/tmp/recentf.%s" (emacs-pid))) ;; https://github.com/syl20bnr/spacemacs/issues/5186
-
   ;; don't add newline
   (setq require-final-newline nil)
   (setq mode-require-final-newline nil)
-
+  ;; don't make autoident on newline
   (when (fboundp 'electric-indent-mode) (electric-indent-mode -1))
+
   ;; (setq split-height-threshold nil)
   ;; (setq split-width-threshold 0)
 
