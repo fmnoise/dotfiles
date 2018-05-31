@@ -472,6 +472,7 @@
   (setq require-final-newline nil)
   (setq mode-require-final-newline nil)
 
+  (when (fboundp 'electric-indent-mode) (electric-indent-mode -1))
   ;; (setq split-height-threshold nil)
   ;; (setq split-width-threshold 0)
 
