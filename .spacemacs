@@ -411,7 +411,7 @@
   (define-key cider-inspector-mode-map (kbd "M-+ @v") 'cider-inspector-operate-on-point)
 
   (require 'clojure-mode)
-  (define-key clojure-mode-map (kbd "TAB") 'self-insert-command)
+  ;; (define-key clojure-mode-map (kbd "TAB") 'self-insert-command)
   (define-key clojure-mode-map (kbd "M-# *!!") 'cider-eval-buffer)
 
   ;; (setq clojure-indent-style :align-arguments)
