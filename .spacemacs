@@ -402,7 +402,7 @@
            (figwheel-sidecar.repl-api/start-figwheel!)
            (figwheel-sidecar.repl-api/cljs-repl))")
 
-  (add-hook 'cider-mode-hook #'parinfer-mode)
+  ;; (add-hook 'cider-mode-hook #'parinfer-mode)
 
   (require 'cider-inspector)
   (define-key cider-inspector-mode-map (kbd "M-+ @<") 'cider-inspector-prev-page)
