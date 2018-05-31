@@ -389,7 +389,10 @@
   ;; TODO
   ;; - er/mark-outside-pairs
   ;; - er/expand-region
-  ;; - paredit/raise-sexp and other
+  ;; - paredit-raise-sexp
+  ;; - paredit-wrap-round
+  ;; - paredit-wrap-square
+  ;; - paredit-wrap-curly
 
   (setq cider-repl-display-in-current-window t)
   (setq cider-eval-result-duration 30)
