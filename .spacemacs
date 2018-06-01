@@ -394,11 +394,20 @@
   ;; - paredit-wrap-square
   ;; - paredit-wrap-curly
   (require 'expand-region)
+
   (global-set-key (kbd "M-(") 'paredit-wrap-round)
-  (global-set-key (kbd "M-[") 'paredit-wrap-square)
   (global-set-key (kbd "M-{") 'paredit-wrap-curly)
   (global-set-key (kbd "M-)") 'paredit-close-parenthesis)
   (global-set-key (kbd "M-r") 'paredit-raise-sexp)
+  (global-set-key (kbd "M-j") 'paredit-join-sexps)
+  (global-set-key (kbd "M-s") 'paredit-splice-sexps)
+
+  (global-set-key (kbd "M-p r") 'paredit-raise-sexp)
+  (global-set-key (kbd "M-p j") 'paredit-join-sexps)
+  (global-set-key (kbd "M-p s") 'paredit-splice-sexps)
+  (global-set-key (kbd "M-p [") 'paredit-wrap-square)
+  (global-set-key (kbd "M-p (") 'paredit-wrap-round)
+  (global-set-key (kbd "M-p {") 'paredit-wrap-curly)
   (global-set-key (kbd "M-p o") 'er/mark-outside-pairs)
   (global-set-key (kbd "M-p i") 'er/mark-inside-pairs)
   (global-set-key (kbd "M-p e") 'er/expand-region)
