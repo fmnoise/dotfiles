@@ -393,6 +393,15 @@
   ;; - paredit-wrap-round
   ;; - paredit-wrap-square
   ;; - paredit-wrap-curly
+  (require 'expand-region)
+  (global-set-key (kbd "M-(") 'paredit-wrap-round)
+  (global-set-key (kbd "M-[") 'paredit-wrap-square)
+  (global-set-key (kbd "M-{") 'paredit-wrap-curly)
+  (global-set-key (kbd "M-)") 'paredit-close-parenthesis)
+  (global-set-key (kbd "M-r") 'paredit-raise-sexp)
+  (global-set-key (kbd "M-p o") 'er/mark-outside-pairs)
+  (global-set-key (kbd "M-p i") 'er/mark-inside-pairs)
+  (global-set-key (kbd "M-p e") 'er/expand-region)
 
   (setq cider-repl-display-in-current-window t)
   (setq cider-eval-result-duration 30)
