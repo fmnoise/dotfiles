@@ -378,22 +378,20 @@ With negative N, comment out original line and use the absolute value."
 (defun fmnoise/setup-clojure ()
   (setq cljr-warn-on-eval nil)
 
-  (global-set-key (kbd "M-# )") (lambda () (interactive) (parinfer-indent)))
-  (global-set-key (kbd "M-P") (lambda () (interactive) (parinfer--switch-to-paren-mode)))
-  (global-set-key (kbd "M-I") (lambda () (interactive) (parinfer--switch-to-indent-mode)))
-
   ;; this is about elisp - TODO get rid of spacemacs deps
   (global-set-key (kbd "M-# *!!") 'spacemacs/eval-current-form-sp)
 
   (require 'expand-region)
   ;; TODO move to proper keymaps
-  (global-set-key (kbd "M-(") 'paredit-wrap-round)
-  (global-set-key (kbd "M-{") 'paredit-wrap-curly)
-  (global-set-key (kbd "M-)") 'paredit-close-round)
-  (global-set-key (kbd "M-r") 'paredit-raise-sexp)
-  (global-set-key (kbd "M-j") 'paredit-join-sexps)
-  (global-set-key (kbd "M-s") 'paredit-splice-sexps)
+  ;; (global-set-key (kbd "M-(") 'paredit-wrap-round)
+  ;; (global-set-key (kbd "M-{") 'paredit-wrap-curly)
+  ;; (global-set-key (kbd "M-)") 'paredit-close-round)
+  ;; (global-set-key (kbd "M-r") 'paredit-raise-sexp)
+  ;; (global-set-key (kbd "M-j") 'paredit-join-sexps)
+  ;; (global-set-key (kbd "M-s") 'paredit-splice-sexps)
+
   (global-set-key (kbd "M-e") 'er/expand-region)
+  (global-set-key (kbd "M-o") 'er/mark-outside-pairs)
 
   (global-set-key (kbd "M-# r") 'hydra-cljr-help-menu/body)
 
