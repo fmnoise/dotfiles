@@ -535,14 +535,13 @@ values."
      )
    dotspacemacs-additional-packages '(company
                                       rainbow-mode
-                                      parinfer
                                       zoom-window
                                       magit
                                       color-theme-sanityinc-tomorrow
+                                      command-log-mode
                                       material-theme
                                       clojure-cheatsheet
                                       dockerfile-mode
-                                      badger-theme ;; needs tuning
                                       github-browse-file)
    dotspacemacs-frozen-packages '()
    dotspacemacs-excluded-packages '(evil-visualstar
