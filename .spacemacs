@@ -218,20 +218,25 @@
     (interactive)
     (mc-mark-line 'backwards))
 
+  (global-set-key (kbd "M-a")     'mc/mark-all-like-this)
+  (global-set-key (kbd "M-w")     'mc/mark-next-like-this)
   (global-set-key (kbd "M-+ _@v") 'mc-next-line)
   (global-set-key (kbd "M-+ _@^") 'mc-prev-line)
-  (global-set-key (kbd "M-+ _|") 'mc-cursors-on)
-  (global-set-key (kbd "M-|") 'mc-cursors-off))
+  (global-set-key (kbd "M-+ _|")  'mc-cursors-on)
+  (global-set-key (kbd "M-|")     'mc-cursors-off))
 
+;; ---------KEYS IN ESC SEQ------------
 ;; #   cmd
 ;; _   shift
-;; *   ctrl (when used with additional keys)
-;; +   alt (when used with additional keys)
+;; *   ctrl
+;; +   alt
 ;; !!  enter
+;; %%  delete
 ;; @>  arrow right
 ;; @<  arrow left
 ;; @v  arrow down
 ;; @^  arrow up
+;; ---------KEYS IN ESC SEQ------------
 
 (defun fmnoise/setup-custom-commands ()
   ;; just an example
@@ -239,48 +244,63 @@
   )
 
 (defun fmnoise/setup-editor ()
+  ;; basic
   (global-set-key (kbd "M-c")     'copy-region-or-sexp)
-  ;; (global-set-key (kbd "TAB")     'self-insert-command)
-
-  (global-set-key (kbd "M-# |")   'neotree-toggle)
-  (global-set-key (kbd "M-# ~")   'helm-buffers-list)
-  (global-set-key (kbd "M-# z")   (lambda () (interactive) (deactivate-mark) (undo)))
-  (global-set-key (kbd "M-# n")   'spacemacs/new-empty-buffer)
-  (global-set-key (kbd "M-# g")   'rgrep)
-  (global-set-key (kbd "M-# d")   'spacemacs/duplicate-line-or-region)
   (global-set-key (kbd "M-# _d")  'sp-clone-sexp)
   (global-set-key (kbd "M-# _v")  'paste-sexp-with-replace)
-  (global-set-key (kbd "M-# '")   'helm-resume)
-  (global-set-key (kbd "M-# x")   'kill-region-or-sexp)
-  (global-set-key (kbd "M-# /")   'toggle-comment)
-  (global-set-key (kbd "M-# _@>") 'select-current-line)
-  (global-set-key (kbd "M-# _@<") 'select-current-line)
-  (global-set-key (kbd "M-# p")   'helm-projectile-find-file)
-  (global-set-key (kbd "M-# +@v") 'next-buffer)
-  (global-set-key (kbd "M-# +@^") 'previous-buffer)
   (global-set-key (kbd "M-# v")   'paste-with-replace)
-  (global-set-key (kbd "M-# f")   'helm-do-ag-this-file)
-  (global-set-key (kbd "M-# F")   'helm-projectile-ag)
-  (global-set-key (kbd "M-# q")   'kill-buffer-and-window)
-  (global-set-key (kbd "M-# }")   'indent-rigidly-right)
-  (global-set-key (kbd "M-# {")   'indent-rigidly-left)
+  (global-set-key (kbd "M-# x")   'kill-region-or-sexp)
+  (global-set-key (kbd "M-# %%")  'delete-region)
   (global-set-key (kbd "M-# a")   'copy-whole-buffer)
   (global-set-key (kbd "M-# _a")  'mark-whole-buffer)
-  (global-set-key (kbd "M-# b")   'magit-blame)
+  (global-set-key (kbd "M-# z")   (lambda () (interactive) (deactivate-mark) (undo)))
   (global-set-key (kbd "M-# s")   'save-buffer) ;; TODO clean selection
-  (global-set-key (kbd "M-+ __")  'next-multiframe-window)
-  (global-set-key (kbd "M-# @>")  'end-of-visual-line)
-  (global-set-key (kbd "M-# @<")  'beginning-of-line-text)
+  (global-set-key (kbd "M-`")     'keyboard-quit)
+  (global-set-key (kbd "M-# /")   'toggle-comment)
+  (global-set-key (kbd "M-# }")   'indent-rigidly-right)
+  (global-set-key (kbd "M-# {")   'indent-rigidly-left)
 
+  ;; helm
+  (global-set-key (kbd "M-# ~")   'helm-buffers-list)
+  (global-set-key (kbd "M-# '")   'helm-resume)
+  (global-set-key (kbd "M-# f")   'helm-do-ag-this-file)
+  (global-set-key (kbd "M-# F")   'helm-projectile-ag)
+  (global-set-key (kbd "M-# p")   'helm-projectile-find-file)
   (global-set-key (kbd "M-/")     'helm-semantic-or-imenu)
   (global-set-key (kbd "M-?")     'helm-imenu-in-all-buffers)
+  (global-set-key (kbd "C-t")     'helm-themes)
+
+  ;; tools
+  (with-eval-after-load "neotree"
+    (define-key neotree-mode-map [(left)] 'neotree-select-up-node)
+    (define-key neotree-mode-map [(right)] 'neotree-enter)
+    (define-key neotree-mode-map (kbd "TAB") 'neotree-stretch-toggle))
+  (global-set-key (kbd "M-# |")   'neotree-toggle)
+  (global-set-key (kbd "M-# g")   'rgrep)
+
+  ;; windows/buffers management
+  (global-set-key (kbd "M-+ __")  'next-multiframe-window)
+  (global-set-key (kbd "M-# q")   'kill-buffer-and-window)
+  (global-set-key (kbd "M-# +@v") 'next-buffer)
+  (global-set-key (kbd "M-# +@^") 'previous-buffer)
+  (global-set-key (kbd "M-q")     'delete-window)
+  (global-set-key (kbd "M-Q")     'kill-this-buffer)
   (global-set-key (kbd "M-z")     'zoom-window-no-color-change)
 
-  ;; blocks navigation
+  ;; navigation
   (global-set-key (kbd "M-+ @<")  'level-up-block)
-  (global-set-key (kbd "M-+ @v")  'sp-beginning-of-next-sexp) ;; hs-show-block
-  (global-set-key (kbd "M-+ @^")  'sp-beginning-of-previous-sexp) ;; hs-hide-block
-  (global-set-key (kbd "M-+ @>")  'sp-down-sexp) ;; 'hs-toggle-hiding
+  (global-set-key (kbd "M-+ @v")  'sp-beginning-of-next-sexp)
+  (global-set-key (kbd "M-+ @^")  'sp-beginning-of-previous-sexp)
+  (global-set-key (kbd "M-+ @>")  'sp-down-sexp)
+  (global-set-key (kbd "M-# @^")  'backward-paragraph)
+  (global-set-key (kbd "M-# @v") 'forward-paragraph)
+  (global-set-key (kbd "<mouse-5>") 'scroll-up-line) ;; TODO off all mc / selection
+  (global-set-key (kbd "<mouse-4>") 'scroll-down-line) ;; TODO off all mc / selection
+  (global-set-key (kbd "M-+ *@^") 'scroll-down-line) ;; TODO off all mc / selection
+  (global-set-key (kbd "M-+ *@v") 'scroll-up-line) ;; TODO off all mc / selection
+  (global-set-key (kbd "M-# @>")  'end-of-visual-line)
+  (global-set-key (kbd "M-# @<")  'beginning-of-line-text)
+  (global-set-key (kbd "C-g")     'goto-line)
 
   ;; hide/show
   (global-set-key (kbd "M-* +@<") 'hs-hide-block)
@@ -288,63 +308,32 @@
   (global-set-key (kbd "M-F h")   'hs-hide-all)
   (global-set-key (kbd "M-F s")   'hs-show-all)
 
-  ;; TODO - move away from arrow keys
-  ;; (global-set-key (kbd "M-w")     'previous-line)
-  ;; (global-set-key (kbd "M-a")     'left-char)
-  ;; (global-set-key (kbd "M-s")     'next-line)
-  ;; (global-set-key (kbd "M-d")     'right-char)
+  ;; TODO get rid of spacemacs specificity
+  (global-set-key (kbd "M-# n")   'spacemacs/new-empty-buffer)
+  (global-set-key (kbd "M-# d")   'spacemacs/duplicate-line-or-region)
 
-  ;; ??? UNUSED/RARE
-  (global-set-key (kbd "M-r")     'replace-string)
-  (global-set-key (kbd "M-R")     'replace-regexp)
+  ;; UNUSED
   (global-set-key (kbd "M-l")     'linum-mode)
   (global-set-key (kbd "M-;")     'indent-guide-mode)
   (global-set-key (kbd "C-a")     'toggle-ag-hidden-search)
-
-  (global-set-key (kbd "M-`")     'keyboard-quit)
-  (global-set-key (kbd "M-a")     'mc/mark-all-like-this)
-  (global-set-key (kbd "M-w")     'mc/mark-next-like-this)
-  (global-set-key (kbd "M-q")     'delete-window)
-  (global-set-key (kbd "M-Q")     'kill-this-buffer)
   (global-set-key (kbd "M-h")     'highlight-regexp)
   (global-set-key (kbd "M-H")     'unhighlight-regexp)
-
-  (global-set-key (kbd "C-g")     'goto-line)
-  (global-set-key (kbd "C-t")     'helm-themes)
-
-  ;; scrolling
-  (global-set-key (kbd "<mouse-5>") 'scroll-up-line) ;; TODO off all mc / selection
-  (global-set-key (kbd "<mouse-4>") 'scroll-down-line) ;; TODO off all mc / selection
-  (global-set-key (kbd "M-+ *@^") 'scroll-down-line) ;; TODO off all mc / selection
-  (global-set-key (kbd "M-+ *@v") 'scroll-up-line) ;; TODO off all mc / selection
-
-  (global-set-key (kbd "M-# @^")  'backward-paragraph)
-  (global-set-key (kbd "M-# @v") 'forward-paragraph)
-
-  ;; UNUSED
+  (global-set-key (kbd "M-# _@>") 'select-current-line)
+  (global-set-key (kbd "M-# _@<") 'select-current-line)
   (global-set-key (kbd "M-# m")   (lambda () (interactive) (switch-to-buffer (messages-buffer))))
   (global-set-key (kbd "<f12>") 'spacemacs/find-dotfile)
   (global-set-key (kbd "<f5>") 'spacemacs/copy-file)
   (global-set-key (kbd "<f6>") 'spacemacs/rename-file)
   (global-unset-key (kbd "<f10>"))
 
-  ;; todo - setup window size manipulation: option + ctrl + arrow
-  ;; todo - setup bookmarks
+  ;; TODO
+  ;; - setup window size manipulation: option + ctrl + arrow
+  ;; - setup bookmarks
+  ;; fn+ctrl+shift+alt+arrow(Home End PgUp PgDown) for navigation
+  ;; good hotkeys caps(=alt)+shift + a z / s x / w e
+  )
 
-  ;; todo - good hotkeys
-  ;; M-n new?
-  ;; M-d delete?
-  ;; M-j jump?
-  ;; M-k kill?
-
-  ;; todo - fn+ctrl+shift+alt+arrow(Home End PgUp PgDown) for navigation
-  ;; todo - good hotkeys caps(=alt)+shift + a z / s x / w e
-
-  (with-eval-after-load "neotree"
-    (define-key neotree-mode-map [(left)] 'neotree-select-up-node)
-    (define-key neotree-mode-map [(right)] 'neotree-enter)
-    (define-key neotree-mode-map (kbd "TAB") 'neotree-stretch-toggle)))
-
+ ;;UNUSED
 (defun fmnoise/setup-term ()
   (global-set-key (kbd "M-t") 'term)
   (with-eval-after-load "term"
@@ -370,37 +359,26 @@
     (goto-char curpoint)))
 
 (defun fmnoise/setup-clojure ()
-  (global-set-key (kbd "M-# #_!!") 'cider-eval-defun-to-comment)
-  (global-set-key (kbd "M-# !!") 'cider-eval-toplevel-sexp)
-  (global-set-key (kbd "M-# _!!") 'cider-eval-region) ;; TODO - good combination
-
-  (global-set-key (kbd "M-i") 'cider-inspect-last-result)
-  (global-set-key (kbd "M-d") 'cider-doc)
-
-  ;; UNUSED
-  (global-set-key (kbd "M-# r") 'cider-restart)
-  (global-set-key (kbd "M-# l") 'cider-jack-in)
-  (global-set-key (kbd "M-# k") 'cider-quit)
+  (setq cljr-warn-on-eval nil)
 
   (global-set-key (kbd "M-# )") (lambda () (interactive) (parinfer-indent)))
   (global-set-key (kbd "M-P") (lambda () (interactive) (parinfer--switch-to-paren-mode)))
   (global-set-key (kbd "M-I") (lambda () (interactive) (parinfer--switch-to-indent-mode)))
-  (global-set-key (kbd "M-# *!!") 'spacemacs/eval-current-form-sp) ;; this is about elisp
-  ;; TODO
-  ;; - er/mark-outside-pairs
-  ;; - er/expand-region
-  ;; - paredit-raise-sexp
-  ;; - paredit-wrap-round
-  ;; - paredit-wrap-square
-  ;; - paredit-wrap-curly
-  (require 'expand-region)
 
+  ;; this is about elisp - TODO get rid of spacemacs deps
+  (global-set-key (kbd "M-# *!!") 'spacemacs/eval-current-form-sp)
+
+  (require 'expand-region)
+  ;; TODO move to proper keymaps
   (global-set-key (kbd "M-(") 'paredit-wrap-round)
   (global-set-key (kbd "M-{") 'paredit-wrap-curly)
-  (global-set-key (kbd "M-)") 'paredit-close-parenthesis)
+  (global-set-key (kbd "M-)") 'paredit-close-round)
   (global-set-key (kbd "M-r") 'paredit-raise-sexp)
   (global-set-key (kbd "M-j") 'paredit-join-sexps)
   (global-set-key (kbd "M-s") 'paredit-splice-sexps)
+  (global-set-key (kbd "M-e") 'er/expand-region)
+
+  (global-set-key (kbd "M-# r") 'hydra-cljr-help-menu/body)
 
   (global-set-key (kbd "M-p r") 'paredit-raise-sexp)
   (global-set-key (kbd "M-p j") 'paredit-join-sexps)
@@ -416,11 +394,12 @@
   (setq cider-eval-result-duration 30)
   (setq cider-cljs-lein-repl
         "(do
-           (require 'figwheel-sidecar.repl-api)
-           (figwheel-sidecar.repl-api/start-figwheel!)
-           (figwheel-sidecar.repl-api/cljs-repl))")
+         (require 'figwheel-sidecar.repl-api)
+         (figwheel-sidecar.repl-api/start-figwheel!)
+         (figwheel-sidecar.repl-api/cljs-repl))")
 
-  (add-hook 'cider-mode-hook #'paredit-mode)
+  (add-hook 'clojure-mode-hook #'paredit-mode)
+  (add-hook 'emacs-lisp-mode-hook #'paredit-mode)
 
   (require 'cider-inspector)
   (define-key cider-inspector-mode-map (kbd "M-+ @<") 'cider-inspector-prev-page)
@@ -429,12 +408,20 @@
   (define-key cider-inspector-mode-map (kbd "M-+ @v") 'cider-inspector-operate-on-point)
 
   (require 'clojure-mode)
-  ;; (define-key clojure-mode-map (kbd "TAB") 'self-insert-command)
-  (define-key clojure-mode-map (kbd "M-# *!!") 'cider-eval-buffer)
+  (define-key clojure-mode-map (kbd "M-RET e p") 'cider-eval-sexp-at-point)
+  (define-key clojure-mode-map (kbd "M-RET e t") 'cider-eval-toplevel-sexp)
 
-  ;; (setq clojure-indent-style :align-arguments)
-  ;; (put-clojure-indent 'lete 1)
-  ;; TODO setup clojure indentation
+  (define-key clojure-mode-map (kbd "M-# *!!")  'cider-eval-buffer)
+  (define-key clojure-mode-map (kbd "M-# #_!!") 'cider-eval-defun-to-comment)
+  (define-key clojure-mode-map (kbd "M-# !!")   'cider-eval-toplevel-sexp)
+  (define-key clojure-mode-map (kbd "M-# _!!")  'cider-eval-sexp-at-point) ;; TODO - good combination
+
+  (define-key clojure-mode-map (kbd "M-i") 'cider-inspect-last-result)
+  (define-key clojure-mode-map (kbd "M-d") 'cider-doc)
+
+  ;; TODO
+  ;; - setup cljr, hydra-cljr keys
+  ;; - setup clojure indentation
   )
 
 (defun toggle-magit-status ()
@@ -449,11 +436,17 @@
   )
 
 (defun fmnoise/setup-git ()
-  (global-set-key (kbd "M-'") 'toggle-magit-status)
-  (global-set-key (kbd "M-G") 'github-browse-file)
-  (global-set-key (kbd "M-Z") 'magit-diff-buffer-file)
-
+  (require 'magit)
   (setq github-browse-file-show-line-at-point 1)
+  (magit-add-section-hook 'magit-status-sections-hook
+                          'magit-insert-unpushed-to-upstream
+                          'magit-insert-unpushed-to-upstream-or-recent
+                          'replace)
+
+  (global-set-key (kbd "M-# b") 'magit-blame)
+  (global-set-key (kbd "M-'")   'toggle-magit-status)
+  (global-set-key (kbd "M-G")   'github-browse-file)
+  (global-set-key (kbd "M-Z")   'magit-diff-buffer-file) ;;???
   )
 
 (defun fmnoise/setup-company ()
