@@ -538,7 +538,7 @@ With negative N, comment out original line and use the absolute value."
 You should not put any user code in this function besides modifying the variable
 values."
   (setq-default configuration-layer--elpa-archives
-                '(("melpa-stable" . "http://stable.melpa.org/packages/")))
+                '(("melpa-stable" . "https://stable.melpa.org/packages/")))
   (setq-default package-archives configuration-layer--elpa-archives)
 
   (setq-default
