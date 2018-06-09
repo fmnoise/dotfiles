@@ -562,6 +562,7 @@ values."
                                     evil-args
                                     anaconda-mode
                                     web-mode
+                                    coffee-mode
                                     evil-anzu)
    dotspacemacs-install-packages 'used-only))
 
