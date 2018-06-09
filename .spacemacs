@@ -291,12 +291,17 @@ With negative N, comment out original line and use the absolute value."
   ;; helm
   (global-set-key (kbd "M-# ~")   'helm-buffers-list)
   (global-set-key (kbd "M-# '")   'helm-resume)
+  (global-set-key (kbd "C-t")     'helm-themes)
+
+  ;; search
+  (global-set-key (kbd "M-# S")   'swiper)
+  (global-set-key (kbd "M-# +S")  'counsel-projectile-ag)
+  (global-set-key (kbd "M-# g")   'rgrep)
   (global-set-key (kbd "M-# f")   'helm-do-ag-this-file)
   (global-set-key (kbd "M-# F")   'helm-projectile-ag)
   (global-set-key (kbd "M-# p")   'helm-projectile-find-file)
   (global-set-key (kbd "M-/")     'helm-semantic-or-imenu)
   (global-set-key (kbd "M-?")     'helm-imenu-in-all-buffers)
-  (global-set-key (kbd "C-t")     'helm-themes)
 
   ;; tools
   (with-eval-after-load "neotree"
@@ -304,7 +309,6 @@ With negative N, comment out original line and use the absolute value."
     (define-key neotree-mode-map [(right)] 'neotree-enter)
     (define-key neotree-mode-map (kbd "TAB") 'neotree-stretch-toggle))
   (global-set-key (kbd "M-# |")   'neotree-toggle)
-  (global-set-key (kbd "M-# g")   'rgrep)
 
   ;; windows/buffers management
   (global-set-key (kbd "M-+ __")  'next-multiframe-window)
