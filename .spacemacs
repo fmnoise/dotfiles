@@ -515,6 +515,9 @@
   "Configuration Layers declaration.
 You should not put any user code in this function besides modifying the variable
 values."
+  (setq-default configuration-layer--elpa-archives '(("melpa-stable" . "http://stable.melpa.org/packages/")))
+  (setq-default package-archives configuration-layer--elpa-archives)
+
   (setq-default
    dotspacemacs-distribution 'spacemacs
    dotspacemacs-enable-lazy-installation 'unused
