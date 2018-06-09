@@ -1,19 +1,35 @@
 ;; -*- mode: emacs-lisp -*-
 
-(defun level-up-block ()
+(defun new-empty-buffer ()
+  "Create a new buffer called untitled(<n>)"
   (interactive)
-  (let ((cur-point (point))
-        (new-point (hs-find-block-beginning)))
-    (when (or (equal cur-point new-point)
-              (not new-point))
-      (progn
-        (goto-char (decf cur-point))
-        (hs-find-block-beginning)))))
+  (let ((newbuf (generate-new-buffer-name "untitled")))
+    (switch-to-buffer newbuf)))
+
+(defun duplicate-line-or-region (&optional n)
+  "Duplicate current line, or region if active.
+With argument N, make N copies.
+With negative N, comment out original line and use the absolute value."
+  (interactive "*p")
+  (let ((use-region (use-region-p)))
+    (save-excursion
+      (let ((text (if use-region        ; Get region if active, otherwise line
+                      (buffer-substring (region-beginning) (region-end))
+                    (prog1 (thing-at-point 'line)
+                      (end-of-line)
+                      (if (< 0 (forward-line 1)) ; Go to beginning of next line, or make a new one
+                          (newline))))))
+        (dotimes (i (abs (or n 1)))   ; Insert N times, or once if not specified
+          (insert text))))
+    (if use-region nil        ; Only if we're working with a line (not a region)
+      (let ((pos (- (point) (line-beginning-position)))) ; Save column
+        (if (> 0 n)                     ; Comment out original with negative arg
+            (comment-region (line-beginning-position) (line-end-position)))
+        (forward-line 1)
+        (forward-char pos)))))
 
 (defun buffer-modified-title-sign ()
-  (if (buffer-modified-p (current-buffer))
-      "[~]  "
-    ""))
+  (if (buffer-modified-p (current-buffer)) "[...]  " ""))
 
 (defun current-branch-name ()
   (require 'magit)
@@ -35,28 +51,11 @@
     (send-string-to-terminal (concat "\033]1; " (buffer-name) "\007")))
 )
 
-(defun toggle-ag-hidden-search ()
-  (interactive)
-  (if (and (boundp 'helm-ag-command-option)
-           (symbol-value 'helm-ag-command-option))
-    (progn
-      (setq helm-ag-command-option nil)
-      (message "Search all files OFF" ))
-    (progn
-      (setq helm-ag-command-option "-u")
-      (message "Search all files ON" ))))
-
 (defun toggle-comment ()
   (interactive)
   (if (and transient-mark-mode mark-active)
       (comment-or-uncomment-region (region-beginning) (region-end))
       (comment-or-uncomment-region (line-beginning-position) (line-end-position))))
-
-(defun select-current-line ()
-  "Select current line."
-  (interactive)
-  (end-of-line)
-  (set-mark (line-beginning-position)))
 
 (defun zoom-window-no-color-change ()
   (interactive)
@@ -287,6 +286,7 @@
   (global-set-key (kbd "M-# /")   'toggle-comment)
   (global-set-key (kbd "M-# }")   'indent-rigidly-right)
   (global-set-key (kbd "M-# {")   'indent-rigidly-left)
+  (global-set-key (kbd "M-# d")   'duplicate-line-or-region)
 
   ;; helm
   (global-set-key (kbd "M-# ~")   'helm-buffers-list)
@@ -313,13 +313,14 @@
   (global-set-key (kbd "M-# +@v") 'next-buffer)
   (global-set-key (kbd "M-# +@^") 'previous-buffer)
   (global-set-key (kbd "M-z")     'zoom-window-no-color-change)
+  (global-set-key (kbd "M-# n")   'new-empty-buffer)
+  (global-set-key (kbd "M-# N")   (lambda () (interactive) (new-empty-buffer) (clojure-mode)))
 
   ;; navigation
   (global-set-key (kbd "M-<left>")  'sp-backward-up-sexp)
   (global-set-key (kbd "M-<down>")  'sp-beginning-of-next-sexp)
   (global-set-key (kbd "M-<up>")    'sp-beginning-of-previous-sexp)
   (global-set-key (kbd "M-<right>") 'sp-down-sexp) ;; down-list??
-
   (global-set-key (kbd "M-# @^")  'backward-paragraph)
   (global-set-key (kbd "M-# @v") 'forward-paragraph)
   (global-set-key (kbd "<mouse-5>") 'scroll-up-line) ;; TODO off all mc / selection
@@ -329,20 +330,17 @@
   (global-set-key (kbd "M-# @>")  'end-of-visual-line)
   (global-set-key (kbd "M-# @<")  'beginning-of-line-text)
   (global-set-key (kbd "C-g")     'goto-line)
+  (global-set-key (kbd "M-# j")   'bookmark-set)
+  (global-set-key (kbd "M-# J")   'bookmark-bmenu-list)
 
   ;; hide/show
   (global-set-key (kbd "C-\\") 'hs-toggle-hiding)
   (global-set-key (kbd "M-F h")   'hs-hide-all)
   (global-set-key (kbd "M-F s")   'hs-show-all)
 
-  ;; TODO get rid of spacemacs specificity
-  (global-set-key (kbd "M-# n")   'spacemacs/new-empty-buffer)
-  (global-set-key (kbd "M-# d")   'spacemacs/duplicate-line-or-region)
-
   ;; UNUSED
   (global-set-key (kbd "M-l")     'linum-mode)
   (global-set-key (kbd "M-;")     'indent-guide-mode)
-  (global-set-key (kbd "C-a")     'toggle-ag-hidden-search)
   (global-set-key (kbd "M-# m")   (lambda () (interactive) (switch-to-buffer (messages-buffer))))
 
   ;; TODO
@@ -420,7 +418,7 @@
   (add-hook 'clojure-mode-hook #'paredit-mode)
   (add-hook 'emacs-lisp-mode-hook #'paredit-mode)
 
-  (require 'paredit-mode)
+  (require 'paredit)
   (define-key paredit-mode-map (kbd "M-<up>") 'sp-beginning-of-previous-sexp)
   (define-key paredit-mode-map (kbd "M-<down>") 'sp-beginning-of-next-sexp)
 
@@ -529,7 +527,8 @@
   (fmnoise/setup-mc)
   (fmnoise/setup-editor)
   (fmnoise/setup-extensions)
-  (fmnoise/setup-clojure))
+  (fmnoise/setup-clojure)
+  )
 
 (defun dotspacemacs/layers ()
   "Configuration Layers declaration.
@@ -546,7 +545,7 @@ values."
    dotspacemacs-configuration-layer-path '()
    dotspacemacs-configuration-layers
    '(
-     sql
+     ;; sql
      javascript
      markdown
      clojure
@@ -690,7 +689,7 @@ values."
     ("#CC9393" "#DFAF8F" "#F0DFAF" "#7F9F7F" "#BFEBBF" "#93E0E3" "#94BFF3" "#DC8CC3")))
  '(package-selected-packages
    (quote
-    (org-plus-contrib projectile cider dockerfile-mode ujelly-theme darkburn-theme badger-theme base16-theme discover web-mode tagedit slim-mode scss-mode sass-mode pug-mode less-css-mode helm-css-scss haml-mode emmet-mode plain-theme anti-zenburn-theme flatui-theme perspective sql-indent js-comint yaml-mode github-modern-theme github-theme paxedit autumn-light-theme flycheck-clojure flycheck skewer-mode simple-httpd json-snatcher json-reformat js2-mode yapfify pyvenv pytest pyenv-mode py-isort pip-requirements live-py-mode hy-mode dash-functional helm-pydoc cython-mode anaconda-mode pythonic clojure-cheatsheet rainbow-mode packed magit magit-popup git-commit with-editor evil goto-chg github-browse-file zoom-window persistent-scratch helm-clojuredocs planet-theme plan9-theme color-theme-sanityinc-tomorrow company-quickhelp ac-cider helm-cider magithub mmm-mode markdown-toc markdown-mode gh-md simpleclip helm-fuzzy-find company define-word zenburn-theme ws-butler winum which-key web-beautify volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline smeargle reveal-in-osx-finder restart-emacs rainbow-delimiters popwin persp-mode pcre2el pbcopy parinfer paradox osx-trash osx-dictionary orgit org-bullets open-junk-file neotree move-text material-theme magit-gitflow macrostep lorem-ipsum livid-mode linum-relative link-hint launchctl json-mode js2-refactor js-doc info+ indent-guide hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation hide-comnt help-fns+ helm-themes helm-swoop helm-projectile helm-mode-manager helm-make helm-gitignore helm-flx helm-descbinds helm-ag google-translate golden-ratio gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link flx-ido fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-args evil-anzu elisp-slime-nav dumb-jump column-enforce-mode coffee-mode clj-refactor clean-aindent-mode cider-eval-sexp-fu auto-highlight-symbol auto-compile apropospriate-theme aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line)))
+    (command-log-mode org-plus-contrib projectile cider dockerfile-mode ujelly-theme darkburn-theme badger-theme base16-theme discover web-mode tagedit slim-mode scss-mode sass-mode pug-mode less-css-mode helm-css-scss haml-mode emmet-mode plain-theme anti-zenburn-theme flatui-theme perspective sql-indent js-comint yaml-mode github-modern-theme github-theme paxedit autumn-light-theme flycheck-clojure flycheck skewer-mode simple-httpd json-snatcher json-reformat js2-mode yapfify pyvenv pytest pyenv-mode py-isort pip-requirements live-py-mode hy-mode dash-functional helm-pydoc cython-mode anaconda-mode pythonic clojure-cheatsheet rainbow-mode packed magit magit-popup git-commit with-editor evil goto-chg github-browse-file zoom-window persistent-scratch helm-clojuredocs planet-theme plan9-theme color-theme-sanityinc-tomorrow company-quickhelp ac-cider helm-cider magithub mmm-mode markdown-toc markdown-mode gh-md simpleclip helm-fuzzy-find company define-word zenburn-theme ws-butler winum which-key web-beautify volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline smeargle reveal-in-osx-finder restart-emacs rainbow-delimiters popwin persp-mode pcre2el pbcopy parinfer paradox osx-trash osx-dictionary orgit org-bullets open-junk-file neotree move-text material-theme magit-gitflow macrostep lorem-ipsum livid-mode linum-relative link-hint launchctl json-mode js2-refactor js-doc info+ indent-guide hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation hide-comnt help-fns+ helm-themes helm-swoop helm-projectile helm-mode-manager helm-make helm-gitignore helm-flx helm-descbinds helm-ag google-translate golden-ratio gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link flx-ido fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-args evil-anzu elisp-slime-nav dumb-jump column-enforce-mode coffee-mode clj-refactor clean-aindent-mode cider-eval-sexp-fu auto-highlight-symbol auto-compile apropospriate-theme aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line)))
  '(pdf-view-midnight-colors (quote ("#DCDCCC" . "#383838")))
  '(vc-annotate-background "#2B2B2B")
  '(vc-annotate-color-map
