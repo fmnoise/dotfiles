@@ -560,7 +560,11 @@ values."
                                       rainbow-mode
                                       zoom-window
                                       magit
+                                      swiper
+                                      counsel
+                                      counsel-projectile
                                       color-theme-sanityinc-tomorrow
+                                      planet-theme
                                       command-log-mode
                                       material-theme
                                       clojure-cheatsheet
