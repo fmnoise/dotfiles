@@ -220,14 +220,15 @@
 
   (global-set-key (kbd "M-a")     'mc/mark-all-like-this)
   (global-set-key (kbd "M-w")     'mc/mark-next-like-this)
-  (global-set-key (kbd "M-+ _@v") 'mc-next-line)
-  (global-set-key (kbd "M-+ _@^") 'mc-prev-line)
-  (global-set-key (kbd "M-+ _|")  'mc-cursors-on)
-  (global-set-key (kbd "M-|")     'mc-cursors-off))
+  (global-set-key (kbd "M-S-<down>") 'mc-next-line)
+  (global-set-key (kbd "M-S-<up>") 'mc-prev-line)
+  (global-set-key (kbd "M-|")  'mc-cursors-on)
+  (global-set-key (kbd "M-\\") 'mc-cursors-off))
 
 ;; ---------KEYS IN ESC SEQ------------
 ;; #   cmd
 ;; _   shift
+;; __  tab
 ;; *   ctrl
 ;; +   alt
 ;; !!  enter
@@ -243,16 +244,43 @@
   (global-set-key (kbd "M-] a") 'neotree-toggle)
   )
 
+(defun fmnoise/setup-mappings ()
+  (define-key input-decode-map "\e[1;10A" [S-M-up])
+  (define-key input-decode-map "\e[1;10B" [S-M-down])
+  (define-key input-decode-map "\e[1;10C" [S-M-right])
+  (define-key input-decode-map "\e[1;10D" [S-M-left])
+  (define-key input-decode-map "\e[1;9A"  [M-up])
+  (define-key input-decode-map "\e[1;9B"  [M-down])
+  (define-key input-decode-map "\e[1;9C"  [M-right])
+  (define-key input-decode-map "\e[1;9D"  [M-left])
+  (define-key input-decode-map "\e[1;8A"  [C-M-up])
+  (define-key input-decode-map "\e[1;8B"  [C-M-down])
+  (define-key input-decode-map "\e[1;8C"  [C-M-right])
+  (define-key input-decode-map "\e[1;8D"  [C-M-left])
+
+  ;; (define-key input-decode-map "\e[1;5A" [C-up])
+  ;; (define-key input-decode-map "\e[1;5B" [C-down])
+  ;; (define-key input-decode-map "\e[1;5C" [C-right])
+  ;; (define-key input-decode-map "\e[1;5D" [C-left])
+  ;; (define-key input-decode-map "\e[1;6A" [C-S-up])
+  ;; (define-key input-decode-map "\e[1;6B" [C-S-down])
+  ;; (define-key input-decode-map "\e[1;6C" [C-S-right])
+  ;; (define-key input-decode-map "\e[1;6D" [C-S-left])
+  )
+
 (defun fmnoise/setup-editor ()
+  ;; crappy menu-bar
+  (global-unset-key (kbd "<f10>"))
+
   ;; basic
   (global-set-key (kbd "M-c")     'copy-region-or-sexp)
-  (global-set-key (kbd "M-# _d")  'sp-clone-sexp)
-  (global-set-key (kbd "M-# _v")  'paste-sexp-with-replace)
+  (global-set-key (kbd "M-# D")   'sp-clone-sexp)
+  (global-set-key (kbd "M-# V")  'paste-sexp-with-replace)
   (global-set-key (kbd "M-# v")   'paste-with-replace)
   (global-set-key (kbd "M-# x")   'kill-region-or-sexp)
   (global-set-key (kbd "M-# %%")  'delete-region)
   (global-set-key (kbd "M-# a")   'copy-whole-buffer)
-  (global-set-key (kbd "M-# _a")  'mark-whole-buffer)
+  (global-set-key (kbd "M-# A")   'mark-whole-buffer)
   (global-set-key (kbd "M-# z")   (lambda () (interactive) (deactivate-mark) (undo)))
   (global-set-key (kbd "M-# s")   'save-buffer) ;; TODO clean selection
   (global-set-key (kbd "M-`")     'keyboard-quit)
@@ -281,30 +309,29 @@
   ;; windows/buffers management
   (global-set-key (kbd "M-+ __")  'next-multiframe-window)
   (global-set-key (kbd "M-# q")   'kill-buffer-and-window)
+  (global-set-key (kbd "M-# w")   'delete-window)
   (global-set-key (kbd "M-# +@v") 'next-buffer)
   (global-set-key (kbd "M-# +@^") 'previous-buffer)
-  (global-set-key (kbd "M-q")     'delete-window)
-  (global-set-key (kbd "M-Q")     'kill-this-buffer)
   (global-set-key (kbd "M-z")     'zoom-window-no-color-change)
 
   ;; navigation
-  (global-set-key (kbd "M-+ @<")  'level-up-block)
-  (global-set-key (kbd "M-+ @v")  'sp-beginning-of-next-sexp)
-  (global-set-key (kbd "M-+ @^")  'sp-beginning-of-previous-sexp)
-  (global-set-key (kbd "M-+ @>")  'sp-down-sexp)
+  (global-set-key (kbd "M-<left>")  'sp-backward-up-sexp)
+  (global-set-key (kbd "M-<down>")  'sp-beginning-of-next-sexp)
+  (global-set-key (kbd "M-<up>")    'sp-beginning-of-previous-sexp)
+  (global-set-key (kbd "M-<right>") 'sp-down-sexp) ;; down-list??
+
   (global-set-key (kbd "M-# @^")  'backward-paragraph)
   (global-set-key (kbd "M-# @v") 'forward-paragraph)
   (global-set-key (kbd "<mouse-5>") 'scroll-up-line) ;; TODO off all mc / selection
   (global-set-key (kbd "<mouse-4>") 'scroll-down-line) ;; TODO off all mc / selection
-  (global-set-key (kbd "M-+ *@^") 'scroll-down-line) ;; TODO off all mc / selection
-  (global-set-key (kbd "M-+ *@v") 'scroll-up-line) ;; TODO off all mc / selection
+  (global-set-key (kbd "C-M-<up>") 'scroll-down-line) ;; TODO off all mc / selection
+  (global-set-key (kbd "C-M-<down>") 'scroll-up-line) ;; TODO off all mc / selection
   (global-set-key (kbd "M-# @>")  'end-of-visual-line)
   (global-set-key (kbd "M-# @<")  'beginning-of-line-text)
   (global-set-key (kbd "C-g")     'goto-line)
 
   ;; hide/show
-  (global-set-key (kbd "M-* +@<") 'hs-hide-block)
-  (global-set-key (kbd "M-* +@>") 'hs-show-block)
+  (global-set-key (kbd "C-\\") 'hs-toggle-hiding)
   (global-set-key (kbd "M-F h")   'hs-hide-all)
   (global-set-key (kbd "M-F s")   'hs-show-all)
 
@@ -316,15 +343,7 @@
   (global-set-key (kbd "M-l")     'linum-mode)
   (global-set-key (kbd "M-;")     'indent-guide-mode)
   (global-set-key (kbd "C-a")     'toggle-ag-hidden-search)
-  (global-set-key (kbd "M-h")     'highlight-regexp)
-  (global-set-key (kbd "M-H")     'unhighlight-regexp)
-  (global-set-key (kbd "M-# _@>") 'select-current-line)
-  (global-set-key (kbd "M-# _@<") 'select-current-line)
   (global-set-key (kbd "M-# m")   (lambda () (interactive) (switch-to-buffer (messages-buffer))))
-  (global-set-key (kbd "<f12>") 'spacemacs/find-dotfile)
-  (global-set-key (kbd "<f5>") 'spacemacs/copy-file)
-  (global-set-key (kbd "<f6>") 'spacemacs/rename-file)
-  (global-unset-key (kbd "<f10>"))
 
   ;; TODO
   ;; - setup window size manipulation: option + ctrl + arrow
@@ -400,6 +419,10 @@
 
   (add-hook 'clojure-mode-hook #'paredit-mode)
   (add-hook 'emacs-lisp-mode-hook #'paredit-mode)
+
+  (require 'paredit-mode)
+  (define-key paredit-mode-map (kbd "M-<up>") 'sp-beginning-of-previous-sexp)
+  (define-key paredit-mode-map (kbd "M-<down>") 'sp-beginning-of-next-sexp)
 
   (require 'cider-inspector)
   (define-key cider-inspector-mode-map (kbd "M-+ @<") 'cider-inspector-prev-page)
@@ -484,9 +507,6 @@
   ;; don't make autoident on newline
   (when (fboundp 'electric-indent-mode) (electric-indent-mode -1))
 
-  ;; (setq split-height-threshold nil)
-  ;; (setq split-width-threshold 0)
-
   ;; modes
   (global-company-mode 1)
   (global-eldoc-mode 1)
@@ -501,13 +521,13 @@
   (add-hook 'post-command-hook 'xterm-title-update)
 
   ;; setup calls
+  (fmnoise/setup-mappings)
   (fmnoise/setup-company)
   (fmnoise/setup-term)
   (fmnoise/setup-git)
   (fmnoise/setup-clipboard)
   (fmnoise/setup-mc)
   (fmnoise/setup-editor)
-  ;;(fmnoise/setup-custom-commands)
   (fmnoise/setup-extensions)
   (fmnoise/setup-clojure))
 
@@ -515,7 +535,8 @@
   "Configuration Layers declaration.
 You should not put any user code in this function besides modifying the variable
 values."
-  (setq-default configuration-layer--elpa-archives '(("melpa-stable" . "http://stable.melpa.org/packages/")))
+  (setq-default configuration-layer--elpa-archives
+                '(("melpa-stable" . "http://stable.melpa.org/packages/")))
   (setq-default package-archives configuration-layer--elpa-archives)
 
   (setq-default
