@@ -419,8 +419,13 @@ With negative N, comment out original line and use the absolute value."
   (add-hook 'emacs-lisp-mode-hook #'paredit-mode)
 
   (require 'paredit)
-  (define-key paredit-mode-map (kbd "M-<up>") 'sp-beginning-of-previous-sexp)
-  (define-key paredit-mode-map (kbd "M-<down>") 'sp-beginning-of-next-sexp)
+  (define-key paredit-mode-map (kbd "M-<up>") 'sp-beginning-of-previous-sexp) ;; paredit
+  (define-key paredit-mode-map (kbd "M-<down>") 'sp-beginning-of-next-sexp) ;; paredit
+  (define-key paredit-mode-map (kbd "M-# *(") 'paredit-backward-slurp-sexp)
+  (define-key paredit-mode-map (kbd "M-# *)") 'paredit-forward-slurp-sexp)
+  (define-key paredit-mode-map (kbd "M-# *{") 'paredit-backward-barf-sexp)
+  (define-key paredit-mode-map (kbd "M-# *}") 'paredit-forward-barf-sexp)
+  (define-key paredit-mode-map (kbd "M-{") 'paredit-wrap-curly)
 
   (require 'cider-inspector)
   (define-key cider-inspector-mode-map (kbd "M-+ @<") 'cider-inspector-prev-page)
