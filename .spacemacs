@@ -294,8 +294,10 @@ With negative N, comment out original line and use the absolute value."
   (global-set-key (kbd "C-t")     'helm-themes)
 
   ;; search
+  (require 'ivy)
   (global-set-key (kbd "M-# S")   'swiper)
   (global-set-key (kbd "M-# +S")  'counsel-projectile-ag)
+  (define-key ivy-minibuffer-map (kbd "<escape>") 'kill-this-buffer)
   (global-set-key (kbd "M-# g")   'rgrep)
   (global-set-key (kbd "M-# f")   'helm-do-ag-this-file)
   (global-set-key (kbd "M-# F")   'helm-projectile-ag)
