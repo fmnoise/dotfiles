@@ -428,6 +428,9 @@ With negative N, comment out original line and use the absolute value."
   (define-key paredit-mode-map (kbd "M-# +*(") 'paredit-backward-barf-sexp)
   (define-key paredit-mode-map (kbd "M-# +*)") 'paredit-forward-barf-sexp)
   (define-key paredit-mode-map (kbd "M-{") 'paredit-wrap-curly)
+  (define-key paredit-mode-map (kbd "M-9") 'paredit-wrap-round)
+  (define-key paredit-mode-map (kbd "M-0") 'paredit-close-round)
+  (define-key paredit-mode-map (kbd "M-# +[") 'paredit-wrap-square) ;; can't use simple M-[ due to crashing escape seq handling
 
   (require 'cider-inspector)
   (define-key cider-inspector-mode-map (kbd "M-+ @<") 'cider-inspector-prev-page)
