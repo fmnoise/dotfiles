@@ -422,25 +422,14 @@ With negative N, comment out original line and use the absolute value."
     (cider-eval-sexp-at-point)
     (goto-char curpoint)))
 
-(defun fmnoise/setup-clojure ()
+(defun fmnoise/setup-lisp ()
   (setq cljr-warn-on-eval nil)
 
-  ;; this is about elisp - TODO get rid of spacemacs deps
-  (global-set-key (kbd "M-# *!!") 'spacemacs/eval-current-form-sp)
+  (define-key emacs-lisp-mode-map (kbd "M-# !!") 'spacemacs/eval-current-form-sp)
 
   (require 'expand-region)
-  ;; TODO move to proper keymaps
-  ;; (global-set-key (kbd "M-(") 'paredit-wrap-round)
-  ;; (global-set-key (kbd "M-{") 'paredit-wrap-curly)
-  ;; (global-set-key (kbd "M-)") 'paredit-close-round)
-  ;; (global-set-key (kbd "M-r") 'paredit-raise-sexp)
-  ;; (global-set-key (kbd "M-j") 'paredit-join-sexps)
-  ;; (global-set-key (kbd "M-s") 'paredit-splice-sexps)
-
   (global-set-key (kbd "M-e") 'er/expand-region)
   (global-set-key (kbd "M-o") 'er/mark-outside-pairs)
-
-  (global-set-key (kbd "M-# r") 'hydra-cljr-help-menu/body)
 
   (global-set-key (kbd "M-p r") 'paredit-raise-sexp)
   (global-set-key (kbd "M-p j") 'paredit-join-sexps)
@@ -494,7 +483,6 @@ With negative N, comment out original line and use the absolute value."
   (define-key clojure-mode-map (kbd "M-# _!!")  'cider-eval-sexp-at-point) ;; TODO - good combination
 
   (define-key clojure-mode-map (kbd "M-i") 'cider-inspect-last-result)
-  (define-key clojure-mode-map (kbd "M-d") 'cider-doc)
 
   ;; TODO
   ;; - setup cljr, hydra-cljr keys
@@ -583,7 +571,7 @@ With negative N, comment out original line and use the absolute value."
   (fmnoise/setup-mc)
   (fmnoise/setup-editor)
   (fmnoise/setup-extensions)
-  (fmnoise/setup-clojure)
+  (fmnoise/setup-lisp)
   )
 
 (defun dotspacemacs/layers ()
