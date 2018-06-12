@@ -1,5 +1,34 @@
 ;; -*- mode: emacs-lisp -*-
 
+(defun sp-clone-sexp-noident ()
+  (interactive)
+  (require 'smartparens)
+  (-when-let (ok (let ((sexp (sp-get-thing)))
+                   (if (not (equal (sp-get sexp :op) ""))
+                       sexp
+                     (sp-get-enclosing-sexp))))
+    (sp-get ok
+      (undo-boundary)
+      (if (< :beg-prf (point))
+          ;; this is the case where point is inside a sexp, we place
+          ;; the "clone" before the current enclosing sexp and move
+          ;; the old one below.  Note that the "net result" is the
+          ;; same as the other case, but the implementation must
+          ;; reflect different relative position of the point wrt
+          ;; "current" sexp.
+          (save-excursion
+            (goto-char :beg-prf)
+            (insert-buffer-substring-no-properties
+             (current-buffer) :beg-prf :end-suf)
+            (newline-and-indent))
+        ;; in this case we are in front, so we move after the current
+        ;; one, place the clone and move it below
+        (goto-char :end-suf)
+        (save-excursion
+          (insert-buffer-substring-no-properties
+           (current-buffer) :beg-prf :end-suf))
+        (newline-and-indent)))))
+
 (defun new-empty-buffer ()
   "Create a new buffer called untitled(<n>)"
   (interactive)
