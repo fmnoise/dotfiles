@@ -312,8 +312,8 @@ With negative N, comment out original line and use the absolute value."
 
   ;; basic
   (global-set-key (kbd "M-c")     'copy-region-or-sexp)
-  (global-set-key (kbd "M-# D")   'sp-clone-sexp)
-  (global-set-key (kbd "M-# V")  'paste-sexp-with-replace)
+  (global-set-key (kbd "M-# D")   'sp-clone-sexp-noindent)
+  (global-set-key (kbd "M-# V")   'paste-sexp-with-replace)
   (global-set-key (kbd "M-# v")   'paste-with-replace)
   (global-set-key (kbd "M-# x")   'kill-region-or-sexp)
   (global-set-key (kbd "M-# %%")  'delete-region)
@@ -326,6 +326,8 @@ With negative N, comment out original line and use the absolute value."
   (global-set-key (kbd "M-# }")   'indent-rigidly-right)
   (global-set-key (kbd "M-# {")   'indent-rigidly-left)
   (global-set-key (kbd "M-# d")   'duplicate-line-or-region)
+  (global-set-key (kbd "M-# l")   'delete-space-forward)
+  (global-set-key (kbd "M-# k")   'delete-space-backward)
 
   ;; helm
   (global-set-key (kbd "M-# ~")   'helm-buffers-list)
@@ -480,8 +482,11 @@ With negative N, comment out original line and use the absolute value."
   (define-key cider-inspector-mode-map (kbd "M-+ @v") 'cider-inspector-operate-on-point)
 
   (require 'clojure-mode)
+  (define-key clojure-mode-map (kbd "M-# r") 'hydra-cljr-help-menu/body)
+
   (define-key clojure-mode-map (kbd "M-RET e p") 'cider-eval-sexp-at-point)
   (define-key clojure-mode-map (kbd "M-RET e t") 'cider-eval-toplevel-sexp)
+  (define-key clojure-mode-map (kbd "M-RET s X") 'cider-restart)
 
   (define-key clojure-mode-map (kbd "M-# *!!")  'cider-eval-buffer)
   (define-key clojure-mode-map (kbd "M-# #_!!") 'cider-eval-defun-to-comment)
