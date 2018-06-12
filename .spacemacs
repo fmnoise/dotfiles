@@ -57,6 +57,16 @@ With negative N, comment out original line and use the absolute value."
         (forward-line 1)
         (forward-char pos)))))
 
+(defun delete-space-forward ()
+  "*Delete all spaces and tabs after point."
+  (interactive "*")
+  (delete-region (point) (progn (skip-chars-forward " \t\n") (point))))
+
+(defun delete-space-backward ()
+  "*Delete all spaces and tabs after point."
+  (interactive "*")
+  (delete-region (point) (progn (skip-chars-backward " \t\n") (point))))
+
 (defun buffer-modified-title-sign ()
   (if (buffer-modified-p (current-buffer)) "[...]  " ""))
 
