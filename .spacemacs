@@ -477,6 +477,7 @@ With negative N, comment out original line and use the absolute value."
   (define-key clojure-mode-map (kbd "M-RET e p") 'cider-eval-sexp-at-point)
   (define-key clojure-mode-map (kbd "M-RET e t") 'cider-eval-toplevel-sexp)
   (define-key clojure-mode-map (kbd "M-RET s X") 'cider-restart)
+  (define-key clojure-mode-map (kbd "M-RET s j") 'cider-create-sibling-cljs-repl)
 
   (define-key clojure-mode-map (kbd "M-# *!!")  'cider-eval-buffer)
   (define-key clojure-mode-map (kbd "M-# #_!!") 'cider-eval-defun-to-comment)
