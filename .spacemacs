@@ -1,6 +1,6 @@
 ;; -*- mode: emacs-lisp -*-
 
-(defun sp-clone-sexp-noident ()
+(defun sp-clone-sexp-noindent ()
   (interactive)
   (require 'smartparens)
   (-when-let (ok (let ((sexp (sp-get-thing)))
