@@ -336,6 +336,7 @@ With negative N, comment out original line and use the absolute value."
 
   ;; search
   (require 'ivy)
+  (global-set-key (kbd "M-# \"")  'ivy-resume)
   (global-set-key (kbd "M-# S")   'swiper)
   (global-set-key (kbd "M-# +S")  'counsel-projectile-ag)
   (define-key ivy-minibuffer-map (kbd "<escape>") 'kill-this-buffer)
