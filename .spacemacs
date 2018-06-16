@@ -612,6 +612,7 @@ values."
                                       material-theme
                                       clojure-cheatsheet
                                       dockerfile-mode
+                                      bm
                                       github-browse-file)
    dotspacemacs-frozen-packages '()
    dotspacemacs-excluded-packages '(evil-visualstar
