@@ -636,6 +636,15 @@ values."
                                     anaconda-mode
                                     web-mode
                                     coffee-mode
+                                    slim-mode
+                                    aggressive-indent
+                                    emmet-mode
+                                    haml-mode
+                                    pug-mode
+                                    sass-mode
+                                    scss-mode
+                                    less-css-mode
+                                    fancy-battery-mode
                                     evil-anzu)
    dotspacemacs-install-packages 'used-only))
 
