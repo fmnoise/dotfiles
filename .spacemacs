@@ -456,10 +456,6 @@ With negative N, comment out original line and use the absolute value."
   (require 'paredit)
   (define-key paredit-mode-map (kbd "M-<up>") 'sp-beginning-of-previous-sexp) ;; paredit
   (define-key paredit-mode-map (kbd "M-<down>") 'sp-beginning-of-next-sexp) ;; paredit
-  (define-key paredit-mode-map (kbd "M-# *(") 'paredit-backward-slurp-sexp)
-  (define-key paredit-mode-map (kbd "M-# *)") 'paredit-forward-slurp-sexp)
-  (define-key paredit-mode-map (kbd "M-# +*(") 'paredit-backward-barf-sexp)
-  (define-key paredit-mode-map (kbd "M-# +*)") 'paredit-forward-barf-sexp)
   (define-key paredit-mode-map (kbd "M-{") 'paredit-wrap-curly)
   (define-key paredit-mode-map (kbd "M-9") 'paredit-wrap-round)
   (define-key paredit-mode-map (kbd "M-0") 'paredit-close-round)
