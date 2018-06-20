@@ -1,5 +1,18 @@
 ;; -*- mode: emacs-lisp -*-
 
+(defun jump-to-current-version ()
+  (interactive)
+  (when (fboundp 'projectile-project-root)
+    (when-let ((name (buffer-name)))
+      (let ((cpoint (point))
+            (filename (concat (projectile-project-root)
+                              (first (split-string name ".~")))))
+        (if (file-exists-p filename)
+            (progn
+              (find-file filename)
+              (goto-char cpoint))
+          (message "File doesn't exist: %s" filename))))))
+
 (defun sp-clone-sexp-noindent ()
   (interactive)
   (require 'smartparens)
