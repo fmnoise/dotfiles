@@ -378,18 +378,16 @@ With negative N, comment out original line and use the absolute value."
   (global-set-key (kbd "M-# N")   (lambda () (interactive) (new-empty-buffer) (clojure-mode)))
 
   ;; navigation
-  (global-set-key (kbd "M-<left>")  'sp-backward-up-sexp)
-  (global-set-key (kbd "M-<down>")  'sp-beginning-of-next-sexp)
-  (global-set-key (kbd "M-<up>")    'sp-beginning-of-previous-sexp)
-  (global-set-key (kbd "M-<right>") 'sp-down-sexp) ;; down-list??
   (global-set-key (kbd "M-# @^")  'backward-paragraph)
   (global-set-key (kbd "M-# @v") 'forward-paragraph)
   (global-set-key (kbd "<mouse-5>") 'scroll-up-line) ;; TODO off all mc / selection
   (global-set-key (kbd "<mouse-4>") 'scroll-down-line) ;; TODO off all mc / selection
   (global-set-key (kbd "C-M-<up>") 'scroll-down-line) ;; TODO off all mc / selection
   (global-set-key (kbd "C-M-<down>") 'scroll-up-line) ;; TODO off all mc / selection
-  (global-set-key (kbd "M-# @>")  'end-of-visual-line)
-  (global-set-key (kbd "M-# @<")  'beginning-of-line-text)
+  (global-set-key (kbd "M-# *@>") 'end-of-visual-line)
+  (global-set-key (kbd "M-# *@<") 'beginning-of-line-text)
+  (global-set-key (kbd "M-# @<")  'backward-word)
+  (global-set-key (kbd "M-# @>")  'forward-word)
   (global-set-key (kbd "C-g")     'goto-line)
   (global-set-key (kbd "M-# j")   'bookmark-set)
   (global-set-key (kbd "M-# J")   'bookmark-bmenu-list)
@@ -467,8 +465,11 @@ With negative N, comment out original line and use the absolute value."
   (add-hook 'emacs-lisp-mode-hook #'paredit-mode)
 
   (require 'paredit)
-  (define-key paredit-mode-map (kbd "M-<up>") 'sp-beginning-of-previous-sexp) ;; paredit
-  (define-key paredit-mode-map (kbd "M-<down>") 'sp-beginning-of-next-sexp) ;; paredit
+  (define-key paredit-mode-map (kbd "M-<up>")    'paredit-backward-up)
+  (define-key paredit-mode-map (kbd "M-<down>")  'paredit-forward-down)
+  (define-key paredit-mode-map (kbd "M-<left>")  'paredit-backward)
+  (define-key paredit-mode-map (kbd "M-<right>") 'paredit-forward)
+
   (define-key paredit-mode-map (kbd "M-{") 'paredit-wrap-curly)
   (define-key paredit-mode-map (kbd "M-9") 'paredit-wrap-round)
   (define-key paredit-mode-map (kbd "M-0") 'paredit-close-round)
