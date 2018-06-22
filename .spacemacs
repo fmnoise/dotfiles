@@ -482,6 +482,7 @@ With negative N, comment out original line and use the absolute value."
 
   (require 'clojure-mode)
   (define-key clojure-mode-map (kbd "M-# r") 'hydra-cljr-help-menu/body)
+  (define-key clojure-mode-map (kbd "M-# */") (lambda () (interactive) (insert "#_"))) ;; TODO go to sexp beginning
 
   (define-key clojure-mode-map (kbd "M-RET e p") 'cider-eval-sexp-at-point)
   (define-key clojure-mode-map (kbd "M-RET e t") 'cider-eval-toplevel-sexp)
