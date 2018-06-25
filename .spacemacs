@@ -1,5 +1,30 @@
 ;; -*- mode: emacs-lisp -*-
 
+
+(defun re-frame-jump-to-reg () ;; https://github.com/oliyh/re-jump.el
+  (interactive)
+
+  (require 'cider-util)
+  (require 'cider-resolve)
+  (require 'cider-client)
+  (require 'cider-common)
+  (require 'cider-interaction)
+  (require 'clojure-mode)
+  (let* ((kw (cider-symbol-at-point 'look-back))
+         (ns-qualifier (and
+                        (string-match "^:+\\(.+\\)/.+$" kw)
+                        (match-string 1 kw)))
+         (kw-ns (if ns-qualifier
+                    (cider-resolve-alias (cider-current-ns) ns-qualifier)
+                  (cider-current-ns)))
+         (kw-to-find (concat "::" (replace-regexp-in-string "^:+\\(.+/\\)?" "" kw))))
+
+    (when (and ns-qualifier (string= kw-ns (cider-current-ns)))
+      (error "Could not resolve alias \"%s\" in %s" ns-qualifier (cider-current-ns)))
+
+    (progn (cider-find-ns "-" kw-ns)
+           (search-forward-regexp (concat "reg-[a-zA-Z-]*[ \\\n]+" kw-to-find) nil 'noerror))))
+
 (defun jump-to-current-version ()
   (interactive)
   (when (fboundp 'projectile-project-root)
@@ -500,6 +525,7 @@ With negative N, comment out original line and use the absolute value."
   (define-key clojure-mode-map (kbd "M-# _!!")  'cider-eval-sexp-at-point) ;; TODO - good combination
 
   (define-key clojure-mode-map (kbd "M-i") 'cider-inspect-last-result)
+  (define-key clojure-mode-map (kbd "M->") 're-frame-jump-to-reg)
 
   ;; TODO
   ;; - setup cljr, hydra-cljr keys
