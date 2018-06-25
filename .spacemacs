@@ -48,19 +48,11 @@
     (sp-get ok
       (undo-boundary)
       (if (< :beg-prf (point))
-          ;; this is the case where point is inside a sexp, we place
-          ;; the "clone" before the current enclosing sexp and move
-          ;; the old one below.  Note that the "net result" is the
-          ;; same as the other case, but the implementation must
-          ;; reflect different relative position of the point wrt
-          ;; "current" sexp.
           (save-excursion
             (goto-char :beg-prf)
             (insert-buffer-substring-no-properties
              (current-buffer) :beg-prf :end-suf)
             (newline-and-indent))
-        ;; in this case we are in front, so we move after the current
-        ;; one, place the clone and move it below
         (goto-char :end-suf)
         (save-excursion
           (insert-buffer-substring-no-properties
@@ -80,17 +72,17 @@ With negative N, comment out original line and use the absolute value."
   (interactive "*p")
   (let ((use-region (use-region-p)))
     (save-excursion
-      (let ((text (if use-region        ; Get region if active, otherwise line
+      (let ((text (if use-region
                       (buffer-substring (region-beginning) (region-end))
                     (prog1 (thing-at-point 'line)
                       (end-of-line)
-                      (if (< 0 (forward-line 1)) ; Go to beginning of next line, or make a new one
+                      (if (< 0 (forward-line 1))
                           (newline))))))
-        (dotimes (i (abs (or n 1)))   ; Insert N times, or once if not specified
+        (dotimes (i (abs (or n 1)))
           (insert text))))
-    (if use-region nil        ; Only if we're working with a line (not a region)
-      (let ((pos (- (point) (line-beginning-position)))) ; Save column
-        (if (> 0 n)                     ; Comment out original with negative arg
+    (if use-region nil
+      (let ((pos (- (point) (line-beginning-position))))
+        (if (> 0 n)
             (comment-region (line-beginning-position) (line-end-position)))
         (forward-line 1)
         (forward-char pos)))))
