@@ -463,8 +463,17 @@ With negative N, comment out original line and use the absolute value."
     (cider-eval-sexp-at-point)
     (goto-char curpoint)))
 
+(defun add-reframe-regs-to-imenu ()
+  (add-to-list
+   'imenu-generic-expression
+   '("re-frame" "(*reg-\\(event-db\\|sub\\|event-fx\\|cofx\\)[ \n]+\\([^\t \n]+\\)" 2)
+   t))
+
 (defun fmnoise/setup-lisp ()
   (setq cljr-warn-on-eval nil)
+  (setq imenu-auto-rescan t)
+
+  (add-hook 'clojurescript-mode-hook #'add-reframe-regs-to-imenu)
 
   (define-key emacs-lisp-mode-map (kbd "M-# !!") 'spacemacs/eval-current-form-sp)
 
