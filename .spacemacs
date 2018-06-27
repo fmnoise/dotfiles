@@ -2,11 +2,11 @@
 
 (defun clojure-ignore ()
   (interactive)
-  (when (not (= (string (following-char) "("))) ;; TODO {} []
+  (when (not (string-equal (string (following-char)) "(")) ;; TODO {} []
     (paredit-backward-up))
   (insert "#_"))
 
-(defun search-symbol-at-point ()
+(defun search-symbol-at-point () ;; TODO
   (interactive)
   (sp-copy-sexp)
   (projectile-ag (current-kill 0)))
