@@ -469,11 +469,29 @@ With negative N, comment out original line and use the absolute value."
    '("re-frame" "(*reg-\\(event-db\\|sub\\|event-fx\\|cofx\\)[ \n]+\\([^\t \n]+\\)" 2)
    t))
 
+(defun clojure-imenu-index ()
+  (list (cons "a" (copy-marker 1))
+        (cons "b" (copy-marker 2))))
+
+(defun set-clojure-imenu-expression ()
+  (setq
+   imenu-generic-expression
+   '((nil "^\\s-*(\\(?:s\\|t/\\)?def[a-z]-?+[[:space:]\n]+\\(?:\\(?:\\^{[^}]+}[[:space:]\n]+\\)\\|\\(?:\\^:[^[:space:]\n]+\\s-+\\)\\)?\\([^[:space:]\n\)]+\\)" 1)
+     ;;(nil "^\\s-*(\\(?:s\\|t/\\)?def\\(?!\\(method\\s\\|multi\\s\\|once\\s\\|macro\\s\\|record\\s\\|type\\s\\|interface\\s\\|protocol\\s\\)\\)[a-z]+[[:space:]\n]+\\(?:\\(?:\\^{[^}]+}[[:space:]\n]+\\)\\|\\(?:\\^:[^[:space:]\n]+\\s-+\\)\\)?\\([^[:space:]\n\)]+\\)" 1)
+     ("var""^\\s-*(\\(?:s\\|t/\\)?def[[:space:]\n]+\\(?:\\(?:\\^{[^}]+}[[:space:]\n]+\\)\\|\\(?:\\^:[^[:space:]\n]+\\s-+\\)\\)?\\([^[:space:]\n\)]+\\)" 1)
+     ("var""^\\s-*(\\(?:s\\|t/\\)?defonce[[:space:]\n]+\\(?:\\(?:\\^{[^}]+}[[:space:]\n]+\\)\\|\\(?:\\^:[^[:space:]\n]+\\s-+\\)\\)?\\([^[:space:]\n\)]+\\)" 1)
+     ("macro" "^\\s-*(defmacro\\s-+\\([^[:space:]\n]+\\)" 1)
+     ("record" "^\\s-*(\\(?:s/\\)?defrecord\\s-+\\([^[:space:]\n]+\\)" 1)
+     ("type" "^\\s-*(deftype\\+?\\s-+\\([^[:space:]\n]+\\)" 1)
+     ("protocol" "^\\s-*(\\(?:def\\(?:-abstract-type\\|interface\\+?\\|protocol\\)\\)\\s-+\\([^[:space:]\n]+\\)" 1)
+     ("multi" "^\\s-*(defmulti\\s-+\\([^[:space:]\n]+\\)" 1)
+     ("method" "^\\s-*(defmethod\\s-+\\([^[:space:]\n]+\\s-+[^[:space:]\n]+\\)" 1)
+     ))
+  (setq imenu-create-index-function 'imenu-default-create-index-function))
+
 (defun fmnoise/setup-lisp ()
   (setq cljr-warn-on-eval nil)
   (setq imenu-auto-rescan t)
-
-  (add-hook 'clojurescript-mode-hook #'add-reframe-regs-to-imenu)
 
   (define-key emacs-lisp-mode-map (kbd "M-# !!") 'spacemacs/eval-current-form-sp)
 
@@ -500,7 +518,9 @@ With negative N, comment out original line and use the absolute value."
          (figwheel-sidecar.repl-api/cljs-repl))")
 
   (add-hook 'clojure-mode-hook #'paredit-mode)
+  ;; (add-hook 'clojure-mode-hook #'set-clojure-imenu-expression)
   (add-hook 'emacs-lisp-mode-hook #'paredit-mode)
+  (add-hook 'clojurescript-mode-hook #'add-reframe-regs-to-imenu)
 
   (require 'paredit)
   (define-key paredit-mode-map (kbd "M-<up>")    'paredit-backward-up)
