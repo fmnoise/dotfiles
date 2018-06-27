@@ -499,6 +499,7 @@ With negative N, comment out original line and use the absolute value."
   (define-key paredit-mode-map (kbd "M-<left>")  'paredit-backward)
   (define-key paredit-mode-map (kbd "M-<right>") 'paredit-forward)
 
+  (define-key paredit-mode-map (kbd "M-k") 'paredit-kill)
   (define-key paredit-mode-map (kbd "M-{") 'paredit-wrap-curly)
   (define-key paredit-mode-map (kbd "M-9") 'paredit-wrap-round)
   (define-key paredit-mode-map (kbd "M-0") 'paredit-close-round)
