@@ -1,5 +1,15 @@
 ;; -*- mode: emacs-lisp -*-
 
+(defun clojure-ignore ()
+  (interactive)
+  (when (not (= (string (following-char) "("))) ;; TODO {} []
+    (paredit-backward-up))
+  (insert "#_"))
+
+(defun search-symbol-at-point ()
+  (interactive)
+  (sp-copy-sexp)
+  (projectile-ag (current-kill 0)))
 
 (defun re-frame-jump-to-reg () ;; https://github.com/oliyh/re-jump.el
   (interactive)
@@ -500,11 +510,7 @@ With negative N, comment out original line and use the absolute value."
 
   (require 'clojure-mode)
   (define-key clojure-mode-map (kbd "M-# r") 'hydra-cljr-help-menu/body)
-  (define-key clojure-mode-map (kbd "M-# */")
-    (lambda ()
-      (interactive)
-      (paredit-backward-up)
-      (insert "#_")))
+  (define-key clojure-mode-map (kbd "M-# */") 'clojure-ignore)
 
   (define-key clojure-mode-map (kbd "M-RET e p") 'cider-eval-sexp-at-point)
   (define-key clojure-mode-map (kbd "M-RET e t") 'cider-eval-toplevel-sexp)
