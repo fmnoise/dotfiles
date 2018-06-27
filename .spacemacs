@@ -642,6 +642,7 @@ values."
    dotspacemacs-configuration-layer-path '()
    dotspacemacs-configuration-layers
    '(
+     yaml
      ;; sql
      javascript
      markdown
