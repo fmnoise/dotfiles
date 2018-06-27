@@ -245,6 +245,18 @@ With negative N, comment out original line and use the absolute value."
       (kill-region (region-beginning) (region-end))
     (sp-kill-sexp)))
 
+(defun copy-surrounding-sexp ()
+  (interactive)
+  (let ((cpoint (point)))
+    (paredit-backward-up)
+    (sp-copy-sexp)
+    (goto-char cpoint)))
+
+(defun kill-surrounding-sexp ()
+  (interactive)
+  (paredit-backward-up)
+  (sp-kill-sexp))
+
 (defun copy-whole-buffer ()
   (interactive)
   (kill-ring-save (point-min) (point-max))
@@ -352,10 +364,12 @@ With negative N, comment out original line and use the absolute value."
 
   ;; basic
   (global-set-key (kbd "M-c")     'copy-region-or-sexp)
+  (global-set-key (kbd "M-C")     'copy-surrounding-sexp)
   (global-set-key (kbd "M-# D")   'sp-clone-sexp-noindent)
   (global-set-key (kbd "M-# V")   'paste-sexp-with-replace)
   (global-set-key (kbd "M-# v")   'paste-with-replace)
   (global-set-key (kbd "M-# x")   'kill-region-or-sexp)
+  (global-set-key (kbd "M-# X")   'kill-surrounding-sexp)
   (global-set-key (kbd "M-# %%")  'delete-region)
   (global-set-key (kbd "M-# a")   'copy-whole-buffer)
   (global-set-key (kbd "M-# A")   'mark-whole-buffer)
