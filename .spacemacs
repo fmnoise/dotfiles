@@ -641,6 +641,7 @@ values."
      react
      )
    dotspacemacs-additional-packages '(company
+                                      ag
                                       rainbow-mode
                                       zoom-window
                                       magit
