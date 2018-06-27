@@ -413,8 +413,10 @@ With negative N, comment out original line and use the absolute value."
   (global-set-key (kbd "C-M-<down>") 'scroll-up-line) ;; TODO off all mc / selection
   (global-set-key (kbd "M-# @>") 'end-of-visual-line)
   (global-set-key (kbd "M-# @<") 'beginning-of-line-text)
-  (global-set-key (kbd "M-# *@<")  'backward-word)
-  (global-set-key (kbd "M-# *@>")  'forward-word)
+  (global-set-key (kbd "M-# _@<")  'backward-word)
+  (global-set-key (kbd "M-# _@>")  'forward-word)
+  (global-set-key (kbd "M-# *@<")  'backward-sentence) ;; UNUSED
+  (global-set-key (kbd "M-# *@>")  'forward-sentence) ;; UNUSED
   (global-set-key (kbd "C-g")     'goto-line)
   (global-set-key (kbd "M-# j")   'bookmark-set)
   (global-set-key (kbd "M-# J")   'bookmark-bmenu-list)
