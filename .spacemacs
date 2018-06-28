@@ -1,15 +1,89 @@
 ;; -*- mode: emacs-lisp -*-
 
+(defun select-region (begin end)
+  (goto-char begin)
+  (set-mark-command nil)
+  (goto-char end))
+
+(defun select-sexp-at-point (&optional arg dont-kill)
+  (interactive "P")
+  (require 'smartparens)
+  (let* ((raw (sp--raw-argument-p arg))
+         (arg (prefix-numeric-value arg))
+         (n (abs arg))
+         (ok t)
+         (b (point-max))
+         (e (point)))
+    (cond
+     ((and raw
+           (= n 4))
+      (let ((next (sp-get-thing (< arg 0)))
+            (enc (sp-get-enclosing-sexp)))
+        (if (sp-compare-sexps next enc)
+            (when (not dont-kill)
+              (let ((del (sp-get-whitespace)))
+                (sp-get del (delete-region :beg :end))))
+          (if (> arg 0)
+              (sp--kill-or-copy-region
+               (sp-get next :beg-prf) (sp-get enc :end-in) dont-kill)
+            (sp--kill-or-copy-region
+             (sp-get next :end) (sp-get enc :beg-in) dont-kill))
+          (when (not dont-kill)
+            (let ((del (sp-get-whitespace)))
+              (sp-get del (delete-region :beg :end)))))))
+     ((and raw
+           (= n 16))
+      (let ((lst (sp-backward-up-sexp)))
+        (sp-get lst (sp--kill-or-copy-region
+                     :beg-prf :end dont-kill))))
+     ((= n 0)
+      (let ((e (sp-get-enclosing-sexp)))
+        (when e
+          (sp-get e (sp--kill-or-copy-region
+                     :beg-in :end-in dont-kill)))))
+     (t
+      (save-excursion
+        (while (and (> n 0) ok)
+          (setq ok (sp-forward-sexp (sp--signum arg)))
+          (sp-get ok
+            (when (< :beg-prf b) (setq b :beg-prf))
+            (when (> :end e) (setq e :end)))
+          (setq n (1- n))))
+      (when ok
+        (let ((bm (set-marker (make-marker) b)))
+          (if (eq last-command 'kill-region)
+              (progn
+                (when (member sp-successive-kill-preserve-whitespace '(1 2))
+                  (kill-append sp-last-kill-whitespace nil))
+                (select-region (if (> b (point)) (point) b) e))
+            (select-region b e))
+          (when (not dont-kill)
+            (sp--cleanup-after-kill)
+            (when (string-match-p "\n" (buffer-substring-no-properties bm (point)))
+              (setq sp-last-kill-whitespace
+                    (concat sp-last-kill-whitespace
+                            (buffer-substring-no-properties bm (point))))
+              (select-region bm (point)))
+            (when (= 0 sp-successive-kill-preserve-whitespace)
+              (kill-append sp-last-kill-whitespace nil)))))))))
+
 (defun clojure-ignore ()
   (interactive)
   (when (not (string-equal (string (following-char)) "(")) ;; TODO {} []
     (paredit-backward-up))
   (insert "#_"))
 
-(defun search-symbol-at-point () ;; TODO
+;; (defun occur-symbol-at-point ()
+;;   (interactive)
+;;   (let ((sym (thing-at-point 'symbol)))
+;;     (if sym
+;;         (push (regexp-quote sym) regexp-history)) ;regexp-history defvared in replace.el
+;;     (call-interactively 'occur)))
+
+(defun search-symbol-at-point ()
   (interactive)
-  (sp-copy-sexp)
-  (projectile-ag (current-kill 0)))
+  (select-sexp-at-point)
+  (helm-projectile-ag))
 
 (defun re-frame-jump-to-reg () ;; https://github.com/oliyh/re-jump.el
   (interactive)
@@ -395,6 +469,7 @@ With negative N, comment out original line and use the absolute value."
   (global-set-key (kbd "M-# +S")  'counsel-projectile-ag)
   (define-key ivy-minibuffer-map (kbd "<escape>") 'kill-this-buffer)
   (global-set-key (kbd "M-# g")   'rgrep)
+  (global-set-key (kbd "M-# .")   'search-symbol-at-point)
   (global-set-key (kbd "M-# f")   'helm-do-ag-this-file)
   (global-set-key (kbd "M-# F")   'helm-projectile-ag)
   (global-set-key (kbd "M-# p")   'helm-projectile-find-file)
