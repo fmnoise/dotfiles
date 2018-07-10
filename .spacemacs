@@ -73,13 +73,6 @@
     (paredit-backward-up))
   (insert "#_"))
 
-;; (defun occur-symbol-at-point ()
-;;   (interactive)
-;;   (let ((sym (thing-at-point 'symbol)))
-;;     (if sym
-;;         (push (regexp-quote sym) regexp-history)) ;regexp-history defvared in replace.el
-;;     (call-interactively 'occur)))
-
 (defun search-symbol-at-point ()
   (interactive)
   (select-sexp-at-point)
@@ -203,8 +196,7 @@ With negative N, comment out original line and use the absolute value."
 
   (if (not (equal (projectile-project-name) "-"))
     (send-string-to-terminal (concat "\033]1; (" (projectile-project-name) ") \007"))
-    (send-string-to-terminal (concat "\033]1; " (buffer-name) "\007")))
-)
+    (send-string-to-terminal (concat "\033]1; " (buffer-name) "\007"))))
 
 (defun toggle-comment ()
   (interactive)
@@ -336,8 +328,7 @@ With negative N, comment out original line and use the absolute value."
 (defun copy-whole-buffer ()
   (interactive)
   (kill-ring-save (point-min) (point-max))
-  (message "Buffer copied to clipboard!")
-  )
+  (message "Buffer copied to clipboard!"))
 
 (defun copy-file-name-to-clipboard ()
   "Copy the current buffer file name to the clipboard."
@@ -407,8 +398,7 @@ With negative N, comment out original line and use the absolute value."
 
 (defun fmnoise/setup-custom-commands ()
   ;; just an example
-  (global-set-key (kbd "M-] a") 'neotree-toggle)
-  )
+  (global-set-key (kbd "M-] a") 'neotree-toggle))
 
 (defun fmnoise/setup-mappings ()
   (define-key input-decode-map "\e[1;10A" [S-M-up])
@@ -662,8 +652,7 @@ With negative N, comment out original line and use the absolute value."
               (progn (delete-windows-on buf) (kill-buffer buf))
             (magit-status))
         (magit-status))
-    (message "Not a git repo!"))
-  )
+    (message "Not a git repo!")))
 
 (defun fmnoise/setup-git ()
   (require 'magit)
@@ -914,7 +903,7 @@ values."
     ("#CC9393" "#DFAF8F" "#F0DFAF" "#7F9F7F" "#BFEBBF" "#93E0E3" "#94BFF3" "#DC8CC3")))
  '(package-selected-packages
    (quote
-    (command-log-mode org-plus-contrib projectile cider dockerfile-mode ujelly-theme darkburn-theme badger-theme base16-theme discover web-mode tagedit slim-mode scss-mode sass-mode pug-mode less-css-mode helm-css-scss haml-mode emmet-mode plain-theme anti-zenburn-theme flatui-theme perspective sql-indent js-comint yaml-mode github-modern-theme github-theme paxedit autumn-light-theme flycheck-clojure flycheck skewer-mode simple-httpd json-snatcher json-reformat js2-mode yapfify pyvenv pytest pyenv-mode py-isort pip-requirements live-py-mode hy-mode dash-functional helm-pydoc cython-mode anaconda-mode pythonic clojure-cheatsheet rainbow-mode packed magit magit-popup git-commit with-editor evil goto-chg github-browse-file zoom-window persistent-scratch helm-clojuredocs planet-theme plan9-theme color-theme-sanityinc-tomorrow company-quickhelp ac-cider helm-cider magithub mmm-mode markdown-toc markdown-mode gh-md simpleclip helm-fuzzy-find company define-word zenburn-theme ws-butler winum which-key web-beautify volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline smeargle reveal-in-osx-finder restart-emacs rainbow-delimiters popwin persp-mode pcre2el pbcopy parinfer paradox osx-trash osx-dictionary orgit org-bullets open-junk-file neotree move-text material-theme magit-gitflow macrostep lorem-ipsum livid-mode linum-relative link-hint launchctl json-mode js2-refactor js-doc info+ indent-guide hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation hide-comnt help-fns+ helm-themes helm-swoop helm-projectile helm-mode-manager helm-make helm-gitignore helm-flx helm-descbinds helm-ag google-translate golden-ratio gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link flx-ido fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-args evil-anzu elisp-slime-nav dumb-jump column-enforce-mode coffee-mode clj-refactor clean-aindent-mode cider-eval-sexp-fu auto-highlight-symbol auto-compile apropospriate-theme aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line)))
+    (ag bm counsel-projectile counsel swiper-helm swiper ivy command-log-mode org-plus-contrib projectile cider dockerfile-mode ujelly-theme darkburn-theme badger-theme base16-theme discover web-mode tagedit slim-mode scss-mode sass-mode pug-mode less-css-mode helm-css-scss haml-mode emmet-mode plain-theme anti-zenburn-theme flatui-theme perspective sql-indent js-comint yaml-mode github-modern-theme github-theme paxedit autumn-light-theme flycheck-clojure flycheck skewer-mode simple-httpd json-snatcher json-reformat js2-mode yapfify pyvenv pytest pyenv-mode py-isort pip-requirements live-py-mode hy-mode dash-functional helm-pydoc cython-mode anaconda-mode pythonic clojure-cheatsheet rainbow-mode packed magit magit-popup git-commit with-editor evil goto-chg github-browse-file zoom-window persistent-scratch helm-clojuredocs planet-theme plan9-theme color-theme-sanityinc-tomorrow company-quickhelp ac-cider helm-cider magithub mmm-mode markdown-toc markdown-mode gh-md simpleclip helm-fuzzy-find company define-word zenburn-theme ws-butler winum which-key web-beautify volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline smeargle reveal-in-osx-finder restart-emacs rainbow-delimiters popwin persp-mode pcre2el pbcopy parinfer paradox osx-trash osx-dictionary orgit org-bullets open-junk-file neotree move-text material-theme magit-gitflow macrostep lorem-ipsum livid-mode linum-relative link-hint launchctl json-mode js2-refactor js-doc info+ indent-guide hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation hide-comnt help-fns+ helm-themes helm-swoop helm-projectile helm-mode-manager helm-make helm-gitignore helm-flx helm-descbinds helm-ag google-translate golden-ratio gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link flx-ido fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-args evil-anzu elisp-slime-nav dumb-jump column-enforce-mode coffee-mode clj-refactor clean-aindent-mode cider-eval-sexp-fu auto-highlight-symbol auto-compile apropospriate-theme aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line)))
  '(pdf-view-midnight-colors (quote ("#DCDCCC" . "#383838")))
  '(vc-annotate-background "#2B2B2B")
  '(vc-annotate-color-map
