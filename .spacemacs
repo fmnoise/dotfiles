@@ -624,10 +624,10 @@ With negative N, comment out original line and use the absolute value."
   (define-key paredit-mode-map (kbd "M-# +[") 'paredit-wrap-square) ;; can't use simple M-[ due to crashing escape seq handling
 
   (require 'cider-inspector)
-  (define-key cider-inspector-mode-map (kbd "M-+ @<") 'cider-inspector-prev-page)
-  (define-key cider-inspector-mode-map (kbd "M-+ @>") 'cider-inspector-next-page)
-  (define-key cider-inspector-mode-map (kbd "M-+ @^") 'cider-inspector-pop)
-  (define-key cider-inspector-mode-map (kbd "M-+ @v") 'cider-inspector-operate-on-point)
+  (define-key cider-inspector-mode-map (kbd "M-<left>") 'cider-inspector-prev-page)
+  (define-key cider-inspector-mode-map (kbd "M-<right>")'cider-inspector-next-page)
+  (define-key cider-inspector-mode-map (kbd "M-<up>") 'cider-inspector-pop)
+  (define-key cider-inspector-mode-map (kbd "M-<down>") 'cider-inspector-operate-on-point)
 
   (require 'clojure-mode)
   (define-key clojure-mode-map (kbd "M-# r") 'hydra-cljr-help-menu/body)
