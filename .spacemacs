@@ -107,7 +107,9 @@
       (error "Could not resolve alias \"%s\" in %s" ns-qualifier (cider-current-ns)))
 
     (progn (cider-find-ns "-" kw-ns)
-           (search-forward-regexp (concat "reg-[a-zA-Z-]*[ \\\n]+" kw-to-find) nil 'noerror))))
+           (search-forward-regexp (concat "[a-zA-Z-]*[ \\\n]+" kw-to-find) nil 'noerror)
+           ;;(search-forward-regexp kw-to-find nil 'noerror)
+           )))
 
 (defun jump-to-current-version ()
   (interactive)
