@@ -444,10 +444,11 @@ With negative N, comment out original line and use the absolute value."
   (global-set-key (kbd "M-# v")   'paste-with-replace)
   (global-set-key (kbd "M-# x")   'kill-region-or-sexp)
   (global-set-key (kbd "M-# X")   'kill-surrounding-sexp)
-  (global-set-key (kbd "M-# %%")  'delete-region)
+  (global-set-key (kbd "M-# %%")  (lambda () (interactive) (if (and transient-mark-mode mark-active) (delete-active-region) (paredit-kill))))
   (global-set-key (kbd "M-# a")   'copy-whole-buffer)
   (global-set-key (kbd "M-# A")   'mark-whole-buffer)
-  (global-set-key (kbd "M-# z")   (lambda () (interactive) (deactivate-mark) (undo)))
+  (global-set-key (kbd "M-# z")   (lambda () (interactive) (deactivate-mark) (undo-tree-undo)))
+  (global-set-key (kbd "M-# Z")   (lambda () (interactive) (deactivate-mark) (undo-tree-redo)))
   (global-set-key (kbd "M-# s")   'save-buffer) ;; TODO clean selection
   (global-set-key (kbd "M-`")     'keyboard-quit)
   (global-set-key (kbd "M-# /")   'toggle-comment)
