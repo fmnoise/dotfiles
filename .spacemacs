@@ -321,7 +321,7 @@ With negative N, comment out original line and use the absolute value."
       (kill-ring-save (region-beginning) (region-end))
     (sp-copy-sexp)))
 
-(defun kill-region-or-sexp ()
+(defun kill-region-or-sexp () ;; TODO don't move to clipboard
   (interactive)
   (if (and transient-mark-mode mark-active)
       (kill-region (region-beginning) (region-end))
@@ -450,7 +450,6 @@ With negative N, comment out original line and use the absolute value."
   (global-set-key (kbd "M-# v")   'paste-with-replace)
   (global-set-key (kbd "M-# x")   'kill-region-or-sexp)
   (global-set-key (kbd "M-# X")   'kill-surrounding-sexp)
-  (global-set-key (kbd "M-# %%")  (lambda () (interactive) (if (and transient-mark-mode mark-active) (delete-active-region) (paredit-kill))))
   (global-set-key (kbd "M-# a")   'copy-whole-buffer)
   (global-set-key (kbd "M-# A")   'mark-whole-buffer)
   (global-set-key (kbd "M-# z")   (lambda () (interactive) (deactivate-mark) (undo-tree-undo)))
@@ -619,15 +618,19 @@ With negative N, comment out original line and use the absolute value."
   (add-hook 'clojurescript-mode-hook #'add-reframe-regs-to-imenu)
 
   (require 'paredit)
+  ;; TODO paredit-kill should not move into clipboard
   (define-key paredit-mode-map (kbd "M-<up>")    'paredit-backward-up)
   (define-key paredit-mode-map (kbd "M-<down>")  'paredit-forward-down)
   (define-key paredit-mode-map (kbd "M-<left>")  'paredit-backward)
   (define-key paredit-mode-map (kbd "M-<right>") 'paredit-forward)
 
-  (define-key paredit-mode-map (kbd "M-k") 'paredit-kill)
+  (define-key paredit-mode-map (kbd "DEL") 'paredit-delete-backward-or-region)
+  (define-key paredit-mode-map (kbd "M-# %%") 'paredit-kill-or-delete-region)
+
   (define-key paredit-mode-map (kbd "M-{") 'paredit-wrap-curly)
   (define-key paredit-mode-map (kbd "M-9") 'paredit-wrap-round)
   (define-key paredit-mode-map (kbd "M-0") 'paredit-close-round)
+  (define-key paredit-mode-map (kbd "M-?") 'helm-imenu-in-all-buffers) ;; more useful than convolute-sexp
   (define-key paredit-mode-map (kbd "M-# +[") 'paredit-wrap-square) ;; can't use simple M-[ due to crashing escape seq handling
 
   (require 'cider-inspector)
