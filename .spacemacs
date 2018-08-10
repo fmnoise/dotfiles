@@ -659,6 +659,14 @@ With negative N, comment out original line and use the absolute value."
   ;; TODO
   ;; - setup cljr, hydra-cljr keys
   ;; - setup clojure indentation
+
+  ;; indentation
+
+  (put-clojure-indent 'reg-sub 1)
+  (put-clojure-indent 'reg-fx 1)
+  (put-clojure-indent 'reg-cofx 1)
+  (put-clojure-indent 'reg-event-fx 1)
+  (put-clojure-indent 'reg-event-db 1)
   )
 
 (defun toggle-magit-status ()
