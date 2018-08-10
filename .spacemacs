@@ -228,6 +228,20 @@ With negative N, comment out original line and use the absolute value."
     (delete-active-region))
   (yank))
 
+(defun paredit-delete-backward-or-region ()
+  (require 'paredit)
+  (interactive)
+  (if (and transient-mark-mode mark-active)
+    (paredit-kill-region) ;;(delete-active-region)
+    (paredit-backward-delete)))
+
+(defun paredit-kill-or-delete-region ()
+  (require 'paredit)
+  (interactive)
+  (if (and transient-mark-mode mark-active)
+    (delete-active-region) ;;(paredit-kill-region)
+    (paredit-kill)))
+
 (defun sp-delete-sexp (&optional arg)
   ;;(require 'smartparens)
   (interactive "P")
