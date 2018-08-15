@@ -232,7 +232,7 @@ With negative N, comment out original line and use the absolute value."
   (require 'paredit)
   (interactive)
   (if (and transient-mark-mode mark-active)
-    (paredit-kill-region) ;;(delete-active-region)
+    (paredit-kill-region (region-beginning) (region-end)) ;;(delete-active-region)
     (paredit-backward-delete)))
 
 (defun paredit-kill-or-delete-region ()
