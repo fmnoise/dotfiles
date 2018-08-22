@@ -561,7 +561,7 @@ With negative N, comment out original line and use the absolute value."
 (defun add-reframe-regs-to-imenu ()
   (add-to-list
    'imenu-generic-expression
-   '("re-frame" "(*reg-\\(event-db\\|sub\\|fx\\|event-fx\\|cofx\\)[ \n]+\\([^\t \n]+\\)" 2)
+   '("re-frame" "(*reg-\\(event-db\\|sub\\|sub-raw\\|fx\\|event-fx\\|event-ctx\\|cofx\\)[ \n]+\\([^\t \n]+\\)" 2)
    t))
 
 (defun clojure-imenu-index ()
