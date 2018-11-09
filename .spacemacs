@@ -546,7 +546,6 @@ With negative N, comment out original line and use the absolute value."
     (define-key term-raw-map (kbd "M-`") 'term-line-mode)
     (define-key term-mode-map (kbd "M-`") 'term-char-mode)))
 
-;; UNUSED - switched to cider-eval-defun-at-point
 (defun cider-eval-toplevel-sexp ()
   ;; requires smartparens to work
   (interactive)
@@ -652,7 +651,7 @@ With negative N, comment out original line and use the absolute value."
 
   (define-key clojure-mode-map (kbd "M-# *!!")  'cider-eval-buffer)
   (define-key clojure-mode-map (kbd "M-# #_!!") 'cider-eval-defun-to-comment)
-  (define-key clojure-mode-map (kbd "M-# !!")   'cider-eval-defun-at-point) ;;'cider-eval-toplevel-sexp
+  (define-key clojure-mode-map (kbd "M-# !!")   'cider-eval-toplevel-sexp)
   (define-key clojure-mode-map (kbd "M-# _!!")  'cider-eval-sexp-at-point) ;; TODO - good combination
 
   (define-key clojure-mode-map (kbd "M-i") 'cider-inspect-last-result)
