@@ -75,8 +75,11 @@
 
 (defun search-symbol-at-point ()
   (interactive)
+  ;; FIXME - select-sexp-at-point kills custom indentation
   (select-sexp-at-point)
   (helm-projectile-ag))
+
+;; TODO - search-symbol-at-point-in-current-buffer
 
 (defun re-frame-jump-to-reg () ;; https://github.com/oliyh/re-jump.el
   (interactive)
@@ -543,6 +546,7 @@ With negative N, comment out original line and use the absolute value."
     (define-key term-raw-map (kbd "M-`") 'term-line-mode)
     (define-key term-mode-map (kbd "M-`") 'term-char-mode)))
 
+;; UNUSED - switched to cider-eval-defun-at-point
 (defun cider-eval-toplevel-sexp ()
   ;; requires smartparens to work
   (interactive)
@@ -643,14 +647,12 @@ With negative N, comment out original line and use the absolute value."
   (define-key clojure-mode-map (kbd "M-# r") 'hydra-cljr-help-menu/body)
   (define-key clojure-mode-map (kbd "M-# */") 'clojure-ignore)
 
-  (define-key clojure-mode-map (kbd "M-RET e p") 'cider-eval-sexp-at-point)
-  (define-key clojure-mode-map (kbd "M-RET e t") 'cider-eval-toplevel-sexp)
   (define-key clojure-mode-map (kbd "M-RET s X") 'cider-restart)
   (define-key clojure-mode-map (kbd "M-RET s j") 'cider-create-sibling-cljs-repl)
 
   (define-key clojure-mode-map (kbd "M-# *!!")  'cider-eval-buffer)
   (define-key clojure-mode-map (kbd "M-# #_!!") 'cider-eval-defun-to-comment)
-  (define-key clojure-mode-map (kbd "M-# !!")   'cider-eval-toplevel-sexp)
+  (define-key clojure-mode-map (kbd "M-# !!")   'cider-eval-defun-at-point) ;;'cider-eval-toplevel-sexp
   (define-key clojure-mode-map (kbd "M-# _!!")  'cider-eval-sexp-at-point) ;; TODO - good combination
 
   (define-key clojure-mode-map (kbd "M-i") 'cider-inspect-last-result)
