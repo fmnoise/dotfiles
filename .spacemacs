@@ -231,6 +231,41 @@ With negative N, comment out original line and use the absolute value."
     (delete-active-region))
   (yank))
 
+;; https://emacs.stackexchange.com/questions/29664/how-to-do-paredit-kill-backwards
+(defun paredit-backward-delete-line ()
+  "Delete line backwards, preserving delimiters and not adding to the kill ring."
+  (require 'paredit)
+  (interactive)
+  (setq-local paredit--started-in-string-p (paredit-in-string-p))
+  (setq-local paredit--backward-region-p nil)
+  (if (or (and (not (paredit-in-char-p (1- (point))))
+               (not (paredit-in-comment-p))
+               (eq (char-syntax (char-before)) ?\) ))
+          (and (not (paredit-in-string-p))
+               (eq (char-syntax (char-before)) ?\" )))
+      (progn
+        (set-mark-command nil)
+        (setq deactivate-mark nil)
+        (paredit-backward)
+        (setq-local paredit--backward-region (buffer-substring (region-beginning) (region-end)))
+        (setq-local paredit--backward-region-p t)
+        (delete-active-region)))
+  (if (or (null paredit--backward-region-p) (<= (s-count-matches "\n" paredit--backward-region) 1))
+      (dotimes (i (current-column))
+        (if (and (not (paredit-in-char-p (1- (point))))
+                 (not (paredit-in-comment-p))
+                 (eq (char-syntax (char-before)) ?\) ))
+            (paredit-backward-delete-line))
+        (unless (or (and (not (paredit-in-char-p (1- (point))))
+                         (not (paredit-in-comment-p))
+                         (eq (char-syntax (char-before)) ?\( )
+                         (eq (char-after) (matching-paren (char-before))))
+                    (and paredit--started-in-string-p
+                         (eq (1- (point)) (car (paredit-string-start+end-points)))
+                         (eq (point) (cdr (paredit-string-start+end-points)))))
+          (if (paredit-in-comment-p) (delete-backward-char 1) (paredit-backward-delete 1)))))
+  (message nil))
+
 (defun paredit-delete-backward-or-region ()
   (require 'paredit)
   (interactive)
@@ -628,6 +663,7 @@ With negative N, comment out original line and use the absolute value."
   (define-key paredit-mode-map (kbd "M-<right>") 'paredit-forward)
 
   (define-key paredit-mode-map (kbd "DEL") 'paredit-delete-backward-or-region)
+  (define-key paredit-mode-map (kbd "M-DEL") 'paredit-backward-delete-line)
   (define-key paredit-mode-map (kbd "M-# %%") 'paredit-kill-or-delete-region)
 
   (define-key paredit-mode-map (kbd "M-{") 'paredit-wrap-curly)
