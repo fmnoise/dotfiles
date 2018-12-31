@@ -657,6 +657,8 @@
 			</dict>
 		</dict>
 	</dict>
+	<key>DarkThemeHasBlackTitlebar</key>
+	<false/>
 	<key>Default Bookmark Guid</key>
 	<string>90BD501A-AEB0-4FF9-B313-42E97B35F5BF</string>
 	<key>DimBackgroundWindows</key>
@@ -778,7 +780,7 @@
 	<key>NSColorPanelMode</key>
 	<string>6</string>
 	<key>NSFontPanelAttributes</key>
-	<string>1, 6</string>
+	<string>1, 7</string>
 	<key>NSNavLastRootDirectory</key>
 	<string>~/Projects/dotfiles</string>
 	<key>NSNavPanelExpandedStateForSaveMode</key>
@@ -821,22 +823,24 @@
 	</dict>
 	<key>NSWindow Frame NSColorPanel</key>
 	<string>268 229 214 309 0 0 1280 778 </string>
+	<key>NSWindow Frame NSFontPanel</key>
+	<string>-856 436 479 339 -1920 329 1920 1080 </string>
 	<key>NSWindow Frame Preferences</key>
 	<string>29 230 606 456 0 0 1280 777 </string>
 	<key>NSWindow Frame ProfilesPanel</key>
-	<string>-1403 739 735 382 -1920 329 1920 1057 </string>
+	<string>-1403 753 735 382 -1920 329 1920 1080 </string>
 	<key>NSWindow Frame SUUpdateAlert</key>
-	<string>-1268 845 620 392 -1920 329 1920 1080 </string>
+	<string>-1268 827 620 392 -1920 329 1920 1057 </string>
 	<key>NSWindow Frame SessionsPreferences</key>
-	<string>-1651 468 697 456 -1920 329 1920 1080 </string>
+	<string>-1651 468 606 469 -1920 329 1920 1080 </string>
 	<key>NSWindow Frame SharedPreferences</key>
-	<string>-1683 450 796 473 -1920 329 1920 1080 </string>
+	<string>-1787 736 796 486 -1920 329 1920 1080 </string>
 	<key>NSWindow Frame UKCrashReporter</key>
 	<string>80 194 592 584 0 0 1280 778 </string>
 	<key>NSWindow Frame com.apple.typography_panel_Hack-Regular</key>
 	<string>344 429 260 184 0 0 1280 778 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>-1917 329 1916 1057 -1920 329 1920 1057 </string>
+	<string>-1920 329 1909 745 -1920 329 1920 1057 </string>
 	<key>NSWindow Frame iTerm Window 1</key>
 	<string>4 8 1270 770 0 0 1280 778 </string>
 	<key>NSWindow Frame iTerm Window 2</key>
@@ -1388,6 +1392,13 @@
 					<integer>10</integer>
 					<key>Text</key>
 					<string>#~</string>
+				</dict>
+				<key>0x60-0x80000</key>
+				<dict>
+					<key>Action</key>
+					<integer>11</integer>
+					<key>Text</key>
+					<string>0x1b 0x1b 0x1b</string>
 				</dict>
 				<key>0x61-0x100000</key>
 				<dict>
@@ -1972,7 +1983,7 @@
 			<key>Screen</key>
 			<integer>-1</integer>
 			<key>Scrollback Lines</key>
-			<integer>1000</integer>
+			<integer>0</integer>
 			<key>Selected Text Color</key>
 			<dict>
 				<key>Blue Component</key>
@@ -2802,13 +2813,13 @@
 	<key>NoSyncInstallationId</key>
 	<string>782F55C7-4F8B-43A6-B72E-70A646D897AD</string>
 	<key>NoSyncLastTipTime</key>
-	<real>552595411.14538801</real>
+	<real>557664424.42114496</real>
 	<key>NoSyncNeverAskAboutSettingAlternateMouseScroll</key>
 	<true/>
 	<key>NoSyncNeverRemindPrefsChangesLostForFile</key>
 	<true/>
 	<key>NoSyncNeverRemindPrefsChangesLostForFile_selection</key>
-	<integer>0</integer>
+	<integer>1</integer>
 	<key>NoSyncPermissionToShowTip</key>
 	<true/>
 	<key>NoSyncTimeOfFirstLaunchOfVersionWithTip</key>
@@ -2817,6 +2828,8 @@
 	<real>477612315.54767197</real>
 	<key>NoSyncTimeOfLastPromoDownload</key>
 	<real>481573768.45883</real>
+	<key>NoSyncTipsDisabled</key>
+	<true/>
 	<key>NoSyncTipsToNotShow</key>
 	<array>
 		<string>000</string>
@@ -2826,6 +2839,14 @@
 		<string>0003</string>
 		<string>0004</string>
 		<string>0005</string>
+		<string>0006</string>
+		<string>0007</string>
+		<string>0008</string>
+		<string>0009</string>
+		<string>0010</string>
+		<string>0011</string>
+		<string>0012</string>
+		<string>0013</string>
 	</array>
 	<key>PMPrintingExpandedStateForPrint2</key>
 	<false/>
@@ -2877,9 +2898,9 @@
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2018-07-09T06:32:14Z</date>
+	<date>2018-12-30T18:40:28Z</date>
 	<key>Secure Input</key>
-	<false/>
+	<true/>
 	<key>Selection Respects Soft Boundaries</key>
 	<true/>
 	<key>ShowBookmarkName</key>
@@ -2911,7 +2932,7 @@
 	<key>findRegex_iTerm</key>
 	<false/>
 	<key>iTerm Version</key>
-	<string>3.1.6</string>
+	<string>3.2.0</string>
 	<key>kCPKSelectionViewPreferredModeKey</key>
 	<integer>0</integer>
 	<key>kCPKSelectionViewShowHSBTextFieldsKey</key>
