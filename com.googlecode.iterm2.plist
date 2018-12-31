@@ -834,7 +834,7 @@
 	<key>NSWindow Frame SessionsPreferences</key>
 	<string>-1651 468 606 469 -1920 329 1920 1080 </string>
 	<key>NSWindow Frame SharedPreferences</key>
-	<string>-1787 736 796 486 -1920 329 1920 1080 </string>
+	<string>-1787 684 796 486 -1920 329 1920 1080 </string>
 	<key>NSWindow Frame UKCrashReporter</key>
 	<string>80 194 592 584 0 0 1280 778 </string>
 	<key>NSWindow Frame com.apple.typography_panel_Hack-Regular</key>
@@ -1148,6 +1148,13 @@
 			</array>
 			<key>Keyboard Map</key>
 			<dict>
+				<key>0x1b-0x0</key>
+				<dict>
+					<key>Action</key>
+					<integer>11</integer>
+					<key>Text</key>
+					<string>0x1b 0x1b 0x1b</string>
+				</dict>
 				<key>0x20-0x80000</key>
 				<dict>
 					<key>Action</key>
@@ -1392,13 +1399,6 @@
 					<integer>10</integer>
 					<key>Text</key>
 					<string>#~</string>
-				</dict>
-				<key>0x60-0x80000</key>
-				<dict>
-					<key>Action</key>
-					<integer>11</integer>
-					<key>Text</key>
-					<string>0x1b 0x1b 0x1b</string>
 				</dict>
 				<key>0x61-0x100000</key>
 				<dict>
