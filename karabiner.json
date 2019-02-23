@@ -15,7 +15,7 @@
                 },
                 "rules": [
                     {
-                        "description": "Change right_option+pl;' to arrow keys",
+                        "description": "right_option+pl;' => arrows",
                         "manipulators": [
                             {
                                 "from": {
@@ -139,7 +139,7 @@
                         ]
                     },
                     {
-                        "description": "Change right_option+number row to f keys",
+                        "description": "right_option+num row => f keys",
                         "manipulators": [
                             {
                                 "from": {
