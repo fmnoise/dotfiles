@@ -96,7 +96,7 @@
                         ]
                     },
                     {
-                        "description": "right_option+[] => home/end",
+                        "description": "right_option+[]<> => home/end/pgup/pgdown",
                         "manipulators": [
                             {
                                 "from": {
@@ -132,6 +132,44 @@
                                 "to": [
                                     {
                                         "key_code": "end"
+                                    }
+                                ],
+                                "type": "basic"
+                            },
+                            {
+                                "from": {
+                                    "key_code": "comma",
+                                    "modifiers": {
+                                        "mandatory": [
+                                            "right_option"
+                                        ],
+                                        "optional": [
+                                            "any"
+                                        ]
+                                    }
+                                },
+                                "to": [
+                                    {
+                                        "key_code": "page_up"
+                                    }
+                                ],
+                                "type": "basic"
+                            },
+                            {
+                                "from": {
+                                    "key_code": "period",
+                                    "modifiers": {
+                                        "mandatory": [
+                                            "right_option"
+                                        ],
+                                        "optional": [
+                                            "any"
+                                        ]
+                                    }
+                                },
+                                "to": [
+                                    {
+                                        "key_code": "page_down"
                                     }
                                 ],
                                 "type": "basic"
