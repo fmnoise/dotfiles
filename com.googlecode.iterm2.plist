@@ -697,24 +697,10 @@
 			<key>Text</key>
 			<string></string>
 		</dict>
-		<key>0xf702-0x320000</key>
-		<dict>
-			<key>Action</key>
-			<integer>33</integer>
-			<key>Text</key>
-			<string></string>
-		</dict>
 		<key>0xf703-0x300000</key>
 		<dict>
 			<key>Action</key>
 			<integer>0</integer>
-			<key>Text</key>
-			<string></string>
-		</dict>
-		<key>0xf703-0x320000</key>
-		<dict>
-			<key>Action</key>
-			<integer>34</integer>
 			<key>Text</key>
 			<string></string>
 		</dict>
@@ -826,21 +812,21 @@
 	<key>NSWindow Frame NSFontPanel</key>
 	<string>-856 436 479 339 -1920 329 1920 1080 </string>
 	<key>NSWindow Frame Preferences</key>
-	<string>29 230 606 456 0 0 1280 777 </string>
+	<string>-1839 809 606 456 -1920 329 1920 1057 </string>
 	<key>NSWindow Frame ProfilesPanel</key>
-	<string>-1403 753 735 382 -1920 329 1920 1080 </string>
+	<string>-1374 1004 735 382 -1920 329 1920 1057 </string>
 	<key>NSWindow Frame SUUpdateAlert</key>
 	<string>-1268 827 620 392 -1920 329 1920 1057 </string>
 	<key>NSWindow Frame SessionsPreferences</key>
 	<string>-1651 468 606 469 -1920 329 1920 1080 </string>
 	<key>NSWindow Frame SharedPreferences</key>
-	<string>-1787 684 796 486 -1920 329 1920 1080 </string>
+	<string>-1788 826 796 486 -1920 329 1920 1057 </string>
 	<key>NSWindow Frame UKCrashReporter</key>
 	<string>80 194 592 584 0 0 1280 778 </string>
 	<key>NSWindow Frame com.apple.typography_panel_Hack-Regular</key>
 	<string>344 429 260 184 0 0 1280 778 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>-1920 329 1909 745 -1920 329 1920 1057 </string>
+	<string>-1916 347 1909 1039 -1920 329 1920 1057 </string>
 	<key>NSWindow Frame iTerm Window 1</key>
 	<string>4 8 1270 770 0 0 1280 778 </string>
 	<key>NSWindow Frame iTerm Window 2</key>
@@ -1154,6 +1140,13 @@
 					<integer>11</integer>
 					<key>Text</key>
 					<string>0x1b 0x1b 0x1b</string>
+				</dict>
+				<key>0x1b-0x100000</key>
+				<dict>
+					<key>Action</key>
+					<integer>10</integer>
+					<key>Text</key>
+					<string>#^</string>
 				</dict>
 				<key>0x20-0x80000</key>
 				<dict>
@@ -1554,6 +1547,13 @@
 					<key>Text</key>
 					<string>#%%</string>
 				</dict>
+				<key>0x9-0x40000</key>
+				<dict>
+					<key>Action</key>
+					<integer>10</integer>
+					<key>Text</key>
+					<string>*__</string>
+				</dict>
 				<key>0x9-0x80000</key>
 				<dict>
 					<key>Action</key>
@@ -1743,13 +1743,6 @@
 					<key>Text</key>
 					<string>#@&lt;</string>
 				</dict>
-				<key>0xf702-0x320000</key>
-				<dict>
-					<key>Action</key>
-					<integer>10</integer>
-					<key>Text</key>
-					<string>#_@&lt;</string>
-				</dict>
 				<key>0xf702-0x340000</key>
 				<dict>
 					<key>Action</key>
@@ -1805,13 +1798,6 @@
 					<integer>10</integer>
 					<key>Text</key>
 					<string>#@&gt;</string>
-				</dict>
-				<key>0xf703-0x320000</key>
-				<dict>
-					<key>Action</key>
-					<integer>10</integer>
-					<key>Text</key>
-					<string>#_@&gt;</string>
 				</dict>
 				<key>0xf703-0x340000</key>
 				<dict>
@@ -2813,7 +2799,7 @@
 	<key>NoSyncInstallationId</key>
 	<string>782F55C7-4F8B-43A6-B72E-70A646D897AD</string>
 	<key>NoSyncLastTipTime</key>
-	<real>557664424.42114496</real>
+	<real>569585925.80386496</real>
 	<key>NoSyncNeverAskAboutSettingAlternateMouseScroll</key>
 	<true/>
 	<key>NoSyncNeverRemindPrefsChangesLostForFile</key>
@@ -2846,6 +2832,7 @@
 		<string>0010</string>
 		<string>0011</string>
 		<string>0012</string>
+		<string>0013</string>
 		<string>0013</string>
 	</array>
 	<key>PMPrintingExpandedStateForPrint2</key>
@@ -2898,7 +2885,9 @@
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2018-12-30T18:40:28Z</date>
+	<date>2019-03-20T07:20:11Z</date>
+	<key>SUSkippedVersion</key>
+	<string>3.2.7</string>
 	<key>Secure Input</key>
 	<true/>
 	<key>Selection Respects Soft Boundaries</key>
@@ -2932,7 +2921,7 @@
 	<key>findRegex_iTerm</key>
 	<false/>
 	<key>iTerm Version</key>
-	<string>3.2.0</string>
+	<string>3.2.6</string>
 	<key>kCPKSelectionViewPreferredModeKey</key>
 	<integer>0</integer>
 	<key>kCPKSelectionViewShowHSBTextFieldsKey</key>
