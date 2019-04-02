@@ -551,6 +551,14 @@
                     "to": {
                         "key_code": "right_option"
                     }
+                },
+                {
+                    "from": {
+                        "key_code": "right_option"
+                    },
+                    "to": {
+                        "key_code": "left_option"
+                    }
                 }
             ],
             "virtual_hid_keyboard": {
